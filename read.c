@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/06 12:05:40 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:15:50 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 static int	check_read_character(struct termios orig_t, char *str, char c, int i)
 {
 	if (ft_isprint(c) == 1)
+	{
 		ft_printf("%d and %c\n\n", c, c);
+	}
 	else
+	{
 		ft_printf("--> %d <---\n\n", c);
+	}
 	str[i] = c;
-	ft_printf("str here: |%s|\n", str);
+	str[i + 1] = '\0';
+	ft_printf("str here: |%s| i %i\n", str, i);
 	if (c == 'q')
 	{
 		stop_raw_mode(orig_t);

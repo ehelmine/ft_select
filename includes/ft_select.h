@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/06 11:57:08 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/07 19:37:56 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@
 
 typedef struct s_select
 {
+	char *terminal_dname;
+	char *terminal_envname;
 	int	i;
 }				t_select;
+
+void			get_terminal_info(t_select *data);
 
 int				read_loop(int argc, char **argv, struct termios orig_t);
 
