@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/10 16:19:57 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/11 09:32:27 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ int	main(int argc, char **argv)
 	{
 		ft_memset(&data, 0, sizeof(t_select));
 		args_to_output(argc, argv);
-		get_terminal_info(&data);
-		orig_t = enter_raw_mode();
-		read_loop(argc, argv, orig_t);
+		if (get_terminal_info(&data) != -1)
+		{
+			orig_t = enter_raw_mode();
+			read_loop(argc, argv, orig_t);
+		}
 	}
 	return (0);
 }
