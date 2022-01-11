@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/11 11:59:33 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/11 20:47:11 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	get_terminal_info(t_select *data)
 		return (output_error(2));
 	else if (check == 0)
 		return (output_error(3));
-	get_terminal_capabilites(data);
+	get_terminal_capabilities(data);
 	ft_printf("device_name %s envname %s\n", data->device_name, data->terminal_envname);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/11 13:45:36 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/11 21:08:56 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_select
 	char	terminal_description[2048];
 	int		term_co_width;
 	int		term_li_height;
-	char	buff_area[2048];
+	char	*buff_area;
 	char	*term_cm_position;
 	char	*term_cr_move_begin;
 	char	*term_le_move_left;
@@ -36,6 +36,11 @@ typedef struct s_select
 	int		term_am_wrap_begin;
 	int		term_LP_wrap_safe;
 	int		term_xn_wrap_weird;
+	char	*term_dl_delete_line;
+	char	*term_dc_delete_char;
+	char	*term_DC_delete_nchar;
+	char	*term_dm_enter_delmode;
+	char	*term_ed_exit_delmode;
 	
 }				t_select;
 
@@ -43,7 +48,7 @@ int				output_error(int i);
 
 int				get_terminal_info(t_select *data);
 
-int				get_terminal_capabilites(t_select *data);
+int				get_terminal_capabilities(t_select *data);
 
 int				read_loop(int argc, char **argv, struct termios orig_t);
 

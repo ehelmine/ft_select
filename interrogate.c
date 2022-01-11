@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/11 13:44:47 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/11 21:10:18 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,74 @@
 ** `LP' = Flag whose presence means that it is safe to write in the last
 ** column of the last line without worrying about undesired scrolling. `LP'
 ** indicates the DEC flavor of `xn' strangeness.
-
+**
+** `dl' = String of commands to delete the line the cursor is on. The
+** following lines move up, and a blank line appears at the bottom of the
+** screen (or bottom of the scroll region). If the terminal has the `db' flag,
+** a nonblank line previously pushed off the screen bottom may reappear at
+** the bottom. The cursor must be at the left margin before this command is
+** used. This command does not move the cursor.
+**
+** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+** Deletion of characters is less complicated; deleting one column is done by
+** outputting the `dc' string. However, there may be a delete mode that must
+** be entered with `dm' in order to make `dc' work.
+**
+** `dc' = String of commands to delete one character position at the cursor.
+** If `dc' is not present, the terminal cannot delete characters.
+** `DC' = String of commands to delete n characters starting at the cursor.
+** It has the same effect as repeating the `dc' string n times. Any terminal
+** description that has `DC' also has `dc'.
+** `dm' = String of commands to enter delete mode. If not present, there is
+** no delete mode, and `dc' can be used at any time (assuming there is a `dc').
+** `ed' = String of commands to exit delete mode. This must be present if
+** `dm' is.
+**
+** To delete n character positions, position the cursor and follow these steps:
+**
+** If the `DC' string is present, output it with parameter n and you are
+** finished. Otherwise, follow the remaining steps.
+** Output the `dm' string, unless you know the terminal is already in
+** delete mode.
+** Output the `dc' string n times.
+** Output the `ed' string eventually. If the flag capability `mi' is present,
+** you can move the cursor and do more deletion without leaving and
+** reentering delete mode.
+** As with the `IC' string, we have departed from the original termcap
+** specifications by assuming that `DC' works without entering delete mode
+** even though `dc' would not.
+**
+** If the `dm' and `im' capabilities are both present and have the same value,
+** it means that the terminal has one mode for both insertion and deletion.
+** It is useful for a program to know this, because then it can do insertions
+** after deletions, or vice versa, without leaving insert/delete mode and
+** reentering it.
+**
 **
 */
 
-int	get_terminal_capabilites(t_select *data)
+void	print_terminal_capabilities(t_select *data)
 {
+	ft_printf("width %i height %i\n", data->term_co_width, data->term_li_height);
+	ft_printf("posit %s\n", data->term_cm_position);
+	ft_printf("mbegin %s\n", data->term_cr_move_begin);
+	ft_printf("mleft %s\n", data->term_le_move_left);
+	ft_printf("mright %s\n", data->term_nd_move_right);
+	ft_printf("mup %s\n", data->term_up_move_up);
+	ft_printf("mdown %s\n", data->term_do_move_down);
+	ft_printf("wrbegin %i\n", data->term_am_wrap_begin);
+	ft_printf("wrsafe %i\n", data->term_LP_wrap_safe);
+	ft_printf("wrweird %i\n", data->term_xn_wrap_weird);
+	ft_printf("delline %s\n", data->term_dl_delete_line);
+	ft_printf("delchar %s\n", data->term_dc_delete_char);
+	ft_printf("delnchar %s\n", data->term_DC_delete_nchar);
+	ft_printf("enterdmode %s\n", data->term_dm_enter_delmode);
+	ft_printf("exitdmode %s\n", data->term_ed_exit_delmode);
+}
+
+int	get_terminal_capabilities(t_select *data)
+{
+	data->buff_area = (char *)ft_memalloc(2048);
 	data->term_co_width = tgetnum("co");
 	data->term_li_height = tgetnum("li");
 	data->term_cm_position = tgetstr("cm", &data->buff_area);
@@ -126,4 +188,16 @@ int	get_terminal_capabilites(t_select *data)
 	data->term_xn_wrap_weird = tgetflag("xn");
 	data->term_LP_wrap_safe = tgetflag("LP");
 	// we want it to wrap -> we want am to be present
+	data->term_dl_delete_line = tgetstr("dl", &data->buff_area);
+	// When outputting an insert or delete command with tputs, the nlines
+	// argument should be the total number of lines from the cursor to the
+	// bottom of the screen (or scroll region). Very often these commands
+	//require padding proportional to this number of lines. See section Padding.
+	data->term_dc_delete_char = tgetstr("dc", &data->buff_area);
+	data->term_DC_delete_nchar = tgetstr("DC", &data->buff_area);
+	data->term_dm_enter_delmode = tgetstr("dm", &data->buff_area);
+	data->term_ed_exit_delmode = tgetstr("ed", &data->buff_area);
+	print_terminal_capabilities(data);
+//	free((void*)data->buff_area);
+	return (1);
 }
