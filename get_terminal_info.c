@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/07 21:02:06 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:24:34 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	get_terminal_info(t_select *data)
 {
 	if (isatty(0))
 		data->terminal_dname = ttyname(0);
+	// error management if isatty and/or ttyname fails
 	data->terminal_envname = getenv("TERM");
 	// error management if getenv doesnt return anything good
 	ft_printf("terminal dname %s envname %s\n", data->terminal_dname, data->terminal_envname);

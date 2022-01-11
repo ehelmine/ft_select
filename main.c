@@ -6,11 +6,16 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/07 19:11:42 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/10 16:19:57 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+/*
+** Write the arguments we just got as input to output.
+**
+*/
 
 static void	args_to_output(int argc, char **argv)
 {
