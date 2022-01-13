@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/11 20:47:11 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/13 16:44:25 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ int	get_terminal_info(t_select *data)
 	int	check;
 	
 	if (isatty(ttyslot()))
+	{
 		data->device_name = ttyname(ttyslot());
+		if (data->device_name == NULL)
+			return (output_error(0));
+	}
 	else
-		return (output_error(0));
-	if (data->device_name == NULL)
 		return (output_error(0));
 	data->terminal_envname = getenv("TERM");
 	if (data->terminal_envname == NULL)

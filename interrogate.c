@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/11 21:10:18 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/13 18:45:12 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@
 ** yourself is the only method supported by the Unix version of termcap.
 **
 **
-** `co' = Numeric value, the width of the screen in character positions. 
-** Even hardcopy terminals normally have a `co' capability.
-** `li' = Numeric value, the height of the screen in lines.
 ** `cm' = String of commands to position the cursor at line l, column c. 
 ** Both parameters are origin-zero, and are defined relative to the screen,
 ** not relative to display memory. All display terminals except a few very
@@ -145,33 +142,64 @@
 ** after deletions, or vice versa, without leaving insert/delete mode and
 ** reentering it.
 **
+** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+** `kl' = String of input characters sent by typing the left-arrow key.
+** `kr' = String of input characters sent by typing the right-arrow key.
+** `ku' = String of input characters sent by typing the up-arrow key.
+** `kd' = String of input characters sent by typing the down-arrow key.
+** ** ** ** ** ** ** ** ** ** ** ** ** ** **
+** `pc' = String of commands for padding. The first character of this string
+** is to be used as the pad character, instead of using null characters for
+** padding. If `pc' is not provided, use null characters. Every program
+** that uses termcap must look up this capability and use it to set the
+** variable PC that is used by tputs. See section Padding.
 **
+** `ti' = String of commands to put the terminal into whatever special modes
+** are needed or appropriate for programs that move the cursor nonsequentially
+** around the screen. Programs that use termcap to do full-screen display
+** should output this string when they start up.
+** `te' = String of commands to undo what is done by the `ti' string.
+** Programs that output the `ti' string on entry should output this string
+** when they exit.
 */
+
+int	write_char(int c)
+{
+	write(1, &c, 1);
+	return (1);
+}
 
 void	print_terminal_capabilities(t_select *data)
 {
-	ft_printf("width %i height %i\n", data->term_co_width, data->term_li_height);
+	char c;
+
 	ft_printf("posit %s\n", data->term_cm_position);
-	ft_printf("mbegin %s\n", data->term_cr_move_begin);
-	ft_printf("mleft %s\n", data->term_le_move_left);
-	ft_printf("mright %s\n", data->term_nd_move_right);
-	ft_printf("mup %s\n", data->term_up_move_up);
-	ft_printf("mdown %s\n", data->term_do_move_down);
-	ft_printf("wrbegin %i\n", data->term_am_wrap_begin);
-	ft_printf("wrsafe %i\n", data->term_LP_wrap_safe);
-	ft_printf("wrweird %i\n", data->term_xn_wrap_weird);
-	ft_printf("delline %s\n", data->term_dl_delete_line);
-	ft_printf("delchar %s\n", data->term_dc_delete_char);
-	ft_printf("delnchar %s\n", data->term_DC_delete_nchar);
-	ft_printf("enterdmode %s\n", data->term_dm_enter_delmode);
-	ft_printf("exitdmode %s\n", data->term_ed_exit_delmode);
+//	ft_printf("mbegin %s\n", data->term_cr_move_begin);
+//	ft_printf("mleft %s\n", data->term_le_move_left);
+//	ft_printf("mright %s\n", data->term_nd_move_right);
+//	ft_printf("mup %s\n", data->term_up_move_up);
+//	ft_printf("mdown %s\n", data->term_do_move_down);
+//	ft_printf("wrbegin %i\n", data->term_am_wrap_begin);
+//	ft_printf("wrsafe %i\n", data->term_LP_wrap_safe);
+//	ft_printf("wrweird %i\n", data->term_xn_wrap_weird);
+//	ft_printf("delline %s\n", data->term_dl_delete_line);
+//	ft_printf("delchar %s\n", data->term_dc_delete_char);
+//	ft_printf("delnchar %s\n", data->term_DC_delete_nchar);
+//	ft_printf("enterdmode %s\n", data->term_dm_enter_delmode);
+//	ft_printf("exitdmode %s\n", data->term_ed_exit_delmode);
+//	ft_printf("arrow r %s\n", data->term_kr_right_arrow);
+//	ft_printf("arrow u %s\n", data->term_ku_up_arrow);
+//	ft_printf("arrow d %s\n", data->term_kd_down_arrow);
+//	ft_printf("padding %s\n", data->term_pc_padding);
+	c = 1;
+	if (data->term_pc_padding == NULL)
+		c = 0;
+	tputs(data->term_ti_start_up, 1, &write_char);
 }
 
 int	get_terminal_capabilities(t_select *data)
 {
 	data->buff_area = (char *)ft_memalloc(2048);
-	data->term_co_width = tgetnum("co");
-	data->term_li_height = tgetnum("li");
 	data->term_cm_position = tgetstr("cm", &data->buff_area);
 	data->term_cr_move_begin = tgetstr("cr", &data->buff_area);
 	data->term_le_move_left = tgetstr("le", &data->buff_area);
@@ -197,6 +225,13 @@ int	get_terminal_capabilities(t_select *data)
 	data->term_DC_delete_nchar = tgetstr("DC", &data->buff_area);
 	data->term_dm_enter_delmode = tgetstr("dm", &data->buff_area);
 	data->term_ed_exit_delmode = tgetstr("ed", &data->buff_area);
+	data->term_kl_left_arrow = tgetstr("kl", &data->buff_area);
+	data->term_kr_right_arrow = tgetstr("kr", &data->buff_area);
+	data->term_ku_up_arrow = tgetstr("ku", &data->buff_area);
+	data->term_kd_down_arrow = tgetstr("kd", &data->buff_area);
+	data->term_pc_padding = tgetstr("pc", &data->buff_area);
+	data->term_ti_start_up = tgetstr("ti", &data->buff_area);
+	data->term_te_finish = tgetstr("te", &data->buff_area);
 	print_terminal_capabilities(data);
 //	free((void*)data->buff_area);
 	return (1);

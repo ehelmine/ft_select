@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/11 09:32:27 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/13 16:52:15 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	args_to_output(int argc, char **argv)
 	while (i < argc)
 	{
 		write(1, argv[i], ft_strlen(argv[i]));
-		write(1, "\n", 1);
+		write(1, "\r\n", 1);
 		i++;
 	}
 }
@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 		if (get_terminal_info(&data) != -1)
 		{
 			orig_t = enter_raw_mode();
-			read_loop(argc, argv, orig_t);
+			read_loop(argc, argv, orig_t, &data);
 		}
 	}
 	return (0);

@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raw_mode.c                                         :+:      :+:    :+:   */
+/*   get_window_size.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/13 14:02:42 by ehelmine         ###   ########.fr       */
+/*   Created: 2022/01/13 16:53:36 by ehelmine          #+#    #+#             */
+/*   Updated: 2022/01/13 16:54:39 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-void	stop_raw_mode(struct termios orig_t)
+void	get_window_size(t_select *data)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_t);
-}
+	struct winsize	window;
 
-struct termios	enter_raw_mode(void)
-{
-	struct termios	orig_t;
-	struct termios	raw_t;
-
-	tcgetattr(STDIN_FILENO, &orig_t);
-	raw_t = orig_t;
-	raw_t.c_iflag &= ~(ICRNL | IXON);
-	raw_t.c_oflag &= ~(OPOST);
-	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw_t);
-	return (orig_t);
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &window);
+	data->window_rows = window.ws_row;
+	data->window_columns = window.ws_col;
+	ft_printf("lines %i columns %i\r\n", window.ws_row, window.ws_col);
 }

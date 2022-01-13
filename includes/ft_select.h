@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/11 21:08:56 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/13 17:07:16 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef struct s_select
 {
 	char	*device_name;
 	char	*terminal_envname;
+	int		window_rows;
+	int		window_columns;
 	char	terminal_description[2048];
-	int		term_co_width;
-	int		term_li_height;
 	char	*buff_area;
 	char	*term_cm_position;
 	char	*term_cr_move_begin;
@@ -41,16 +41,25 @@ typedef struct s_select
 	char	*term_DC_delete_nchar;
 	char	*term_dm_enter_delmode;
 	char	*term_ed_exit_delmode;
+	char	*term_kl_left_arrow;
+	char	*term_kr_right_arrow;
+	char	*term_ku_up_arrow;
+	char	*term_kd_down_arrow;
+	char	*term_pc_padding;
+	char	*term_ti_start_up;
+	char	*term_te_finish;
 	
 }				t_select;
 
 int				output_error(int i);
 
+void			get_window_size(t_select *data);
+
 int				get_terminal_info(t_select *data);
 
 int				get_terminal_capabilities(t_select *data);
 
-int				read_loop(int argc, char **argv, struct termios orig_t);
+int				read_loop(int argc, char **argv, struct termios orig_t, t_select *data);
 
 struct termios	enter_raw_mode(void);
 void			stop_raw_mode(struct termios orig_t);
