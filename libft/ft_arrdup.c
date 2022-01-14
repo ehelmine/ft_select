@@ -6,11 +6,20 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 19:02:36 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/09/30 14:38:03 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:26:00 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+
+/*
+** Takes in array, which has been allocated before.
+** Count length of array, allocate sufficient space for it,
+** make duplicate of every line to the new allocated array with
+** ft_strdup -function and at the same time delete memory of the 
+** old array line by line. In the end free old array and return the new
+** allocated array.
+*/
 
 char	**ft_arrdup(char **arr)
 {
