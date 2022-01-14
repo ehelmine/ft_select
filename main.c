@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 10:11:31 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:30:38 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **
 */
 
-static void	args_to_output(int argc, char **argv, t_select *data)
+static void	args_to_struct(int argc, char **argv, t_select *data)
 {
 	int	i;
 	int	x;
@@ -45,7 +45,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		ft_memset(&data, 0, sizeof(t_select));
-		args_to_output(argc, argv, &data);
+		args_to_struct(argc, argv, &data);
 		if (get_terminal_info(&data) != -1)
 		{
 			orig_t = enter_raw_mode();
