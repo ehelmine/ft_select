@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/13 17:07:16 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:14:53 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_select
 {
 	char	*device_name;
 	char	*terminal_envname;
+	char	input[MAX_INPUT_LEN][MAX_INPUT_LEN];
 	int		window_rows;
 	int		window_columns;
 	char	terminal_description[2048];
@@ -48,7 +49,7 @@ typedef struct s_select
 	char	*term_pc_padding;
 	char	*term_ti_start_up;
 	char	*term_te_finish;
-	
+
 }				t_select;
 
 int				output_error(int i);
@@ -59,7 +60,8 @@ int				get_terminal_info(t_select *data);
 
 int				get_terminal_capabilities(t_select *data);
 
-int				read_loop(int argc, char **argv, struct termios orig_t, t_select *data);
+int				read_loop(int argc, char **argv, struct termios orig_t,
+					t_select *data);
 
 struct termios	enter_raw_mode(void);
 void			stop_raw_mode(struct termios orig_t);

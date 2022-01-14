@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/13 18:45:12 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:12:17 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,16 +162,16 @@
 ** Programs that output the `ti' string on entry should output this string
 ** when they exit.
 */
-
+/*
 int	write_char(int c)
 {
 	write(1, &c, 1);
 	return (1);
-}
+}*/
 
 void	print_terminal_capabilities(t_select *data)
 {
-	char c;
+	char	c;
 
 	ft_printf("posit %s\n", data->term_cm_position);
 //	ft_printf("mbegin %s\n", data->term_cr_move_begin);
@@ -194,7 +194,7 @@ void	print_terminal_capabilities(t_select *data)
 	c = 1;
 	if (data->term_pc_padding == NULL)
 		c = 0;
-	tputs(data->term_ti_start_up, 1, &write_char);
+//	tputs(data->term_ti_start_up, 1, &write_char);
 }
 
 int	get_terminal_capabilities(t_select *data)
