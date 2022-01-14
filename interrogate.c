@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:12:17 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:29:05 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,11 @@ void	print_terminal_capabilities(t_select *data)
 //	ft_printf("mup %s\n", data->term_up_move_up);
 //	ft_printf("mdown %s\n", data->term_do_move_down);
 //	ft_printf("wrbegin %i\n", data->term_am_wrap_begin);
-//	ft_printf("wrsafe %i\n", data->term_LP_wrap_safe);
+//	ft_printf("wrsafe %i\n", data->term_big_lp_wrap_safe);
 //	ft_printf("wrweird %i\n", data->term_xn_wrap_weird);
 //	ft_printf("delline %s\n", data->term_dl_delete_line);
 //	ft_printf("delchar %s\n", data->term_dc_delete_char);
-//	ft_printf("delnchar %s\n", data->term_DC_delete_nchar);
+//	ft_printf("delnchar %s\n", data->term_big_dc_delete_nchar);
 //	ft_printf("enterdmode %s\n", data->term_dm_enter_delmode);
 //	ft_printf("exitdmode %s\n", data->term_ed_exit_delmode);
 //	ft_printf("arrow r %s\n", data->term_kr_right_arrow);
@@ -214,7 +214,7 @@ int	get_terminal_capabilities(t_select *data)
 	// conversion in the kernel (see section Initialization for Use of Termcap)
 	data->term_am_wrap_begin = tgetflag("am");
 	data->term_xn_wrap_weird = tgetflag("xn");
-	data->term_LP_wrap_safe = tgetflag("LP");
+	data->term_big_lp_wrap_safe = tgetflag("LP");
 	// we want it to wrap -> we want am to be present
 	data->term_dl_delete_line = tgetstr("dl", &data->buff_area);
 	// When outputting an insert or delete command with tputs, the nlines
@@ -222,7 +222,7 @@ int	get_terminal_capabilities(t_select *data)
 	// bottom of the screen (or scroll region). Very often these commands
 	//require padding proportional to this number of lines. See section Padding.
 	data->term_dc_delete_char = tgetstr("dc", &data->buff_area);
-	data->term_DC_delete_nchar = tgetstr("DC", &data->buff_area);
+	data->term_big_dc_delete_nchar = tgetstr("DC", &data->buff_area);
 	data->term_dm_enter_delmode = tgetstr("dm", &data->buff_area);
 	data->term_ed_exit_delmode = tgetstr("ed", &data->buff_area);
 	data->term_kl_left_arrow = tgetstr("kl", &data->buff_area);

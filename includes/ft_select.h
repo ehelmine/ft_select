@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:14:53 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:28:45 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ typedef struct s_select
 	char	*term_up_move_up;
 	char	*term_do_move_down;
 	int		term_am_wrap_begin;
-	int		term_LP_wrap_safe;
+	int		term_big_lp_wrap_safe;
 	int		term_xn_wrap_weird;
 	char	*term_dl_delete_line;
 	char	*term_dc_delete_char;
-	char	*term_DC_delete_nchar;
+	char	*term_big_dc_delete_nchar;
 	char	*term_dm_enter_delmode;
 	char	*term_ed_exit_delmode;
 	char	*term_kl_left_arrow;
