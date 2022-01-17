@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/17 12:36:04 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/17 21:10:25 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ typedef struct s_select
 	char	*device_name;
 	char	*terminal_envname;
 	char	input[MAX_INPUT_LEN][MAX_INPUT_LEN];
+	int		amount_of_input;
 	int		window_rows;
 	int		window_columns;
+	int		cursor_x;
+	int		cursor_y;
 	char	terminal_description[2048];
 	char	*buff_area;
 	char	*term_cm_position;
@@ -57,14 +60,13 @@ int				output_error(int i);
 
 void			create_output_str(t_select *data);
 
-void			get_window_size(t_select *data);
+int				get_window_size(t_select *data, int when);
 
 int				get_terminal_info(t_select *data);
 
 int				get_terminal_capabilities(t_select *data);
 
-int				read_loop(int argc, char **argv, struct termios orig_t,
-					t_select *data);
+int				read_loop(struct termios orig_t, t_select *data);
 
 struct termios	enter_raw_mode(void);
 void			stop_raw_mode(struct termios orig_t);

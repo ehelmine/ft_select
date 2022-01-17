@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:30:38 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/17 20:49:24 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ static void	args_to_struct(int argc, char **argv, t_select *data)
 	x = 0;
 	while (i < argc && x < MAX_INPUT_LEN - 1)
 	{
-		//write(1, argv[i], ft_strlen(argv[i]));
-		//write(1, "\r\n", 2);
 		ft_strcpy(data->input[x], argv[i]);
-		ft_strlcat(data->input[x++], "\r\n", MAX_INPUT_LEN);
 		i++;
+		x++;
 	}
 	data->input[x][0] = '\0';
+	data->amount_of_input = x;
 }
 
 int	main(int argc, char **argv)
@@ -49,7 +48,7 @@ int	main(int argc, char **argv)
 		if (get_terminal_info(&data) != -1)
 		{
 			orig_t = enter_raw_mode();
-			read_loop(argc, argv, orig_t, &data);
+			read_loop(orig_t, &data);
 		}
 	}
 	return (0);

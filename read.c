@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/17 12:37:00 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/17 21:17:48 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,26 @@ static int	reading(struct termios orig_t, t_select *data)
 **
 */
 
-int	read_loop(int argc, char **argv, struct termios orig_t, t_select *data)
+int	read_loop(struct termios orig_t, t_select *data)
 {
 	int		i;
 	int		check;
 
-	ft_printf("argc %i argv[0] name of program %s\r\n", argc, argv[0]);
 	i = 0;
 	write(STDOUT_FILENO, "\x1b[2J", 4);
 	write(STDOUT_FILENO, "\x1b[H", 3);
+	get_window_size(data, 0);
+	create_output_str(data);
 	while (1)
 	{
-		get_window_size(data);
-		create_output_str(data);
+		if (get_window_size(data, 1) == -1)
+		{
+			ft_memdel((void *)&data->output);
+			create_output_str(data);
+		}
+		// HOW CAN I GET TERMINAL TO RECOGNISE WHEN I RESIZE IT?
+		// SO IT WOULD IMMEDIATELY DO THE MODIFICATION
+		// TO THE TEXT AND NOT AFTER I PUSH A BUTTON
 	/*	i = 0;
 		while (data->input[i][0] != '\0')
 		{
@@ -89,12 +96,16 @@ int	read_loop(int argc, char **argv, struct termios orig_t, t_select *data)
 			write(STDOUT_FILENO, "\r\n", 2);
 			i++;
 		}*/
-		write(STDOUT_FILENO, &data->output[i], ft_strlen(data->output));
-		if (data->output)
-			free(data->output);
+		write(STDOUT_FILENO, data->output, ft_strlen(data->output));
+		write(STDOUT_FILENO, "\x1b[H", 3);
 		check = reading(orig_t, data);
 		if (check == -1)
 			break ;
+	}
+	if (data->output)
+	{
+		free(data->output);
+		data->output = NULL;
 	}
 	return (1);
 }

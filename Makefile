@@ -6,7 +6,7 @@
 #    By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 12:59:07 by ehelmine          #+#    #+#              #
-#    Updated: 2022/01/17 12:35:46 by ehelmine         ###   ########.fr        #
+#    Updated: 2022/01/17 20:49:00 by ehelmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,10 @@ $(NAME): $(OBJS_DIR) $(OBJS)
 	$(MAKE) -C libft
 	@echo "Sources to objects done"
 	gcc $(CFLAGS) -o $@ $(OBJS) libft/libft.a -ltermcap
-	@echo "Compiling minishell done"
+	@echo "Compiling ft_select done"
 
 $(OBJS_DIR)/$(INPUT_OBJS_DIR)/%.o: %.c
-	gcc  $(CFLAGS) -c $< -o $@
+	gcc $(CFLAGS) -c $< -o $@
 
 $(OBJS_DIR):
 	mkdir objs

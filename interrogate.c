@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:29:05 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/17 16:29:06 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	print_terminal_capabilities(t_select *data)
 {
 	char	c;
 
-	ft_printf("posit %s\n", data->term_cm_position);
+//	ft_printf("posit %s\n", data->term_cm_position);
 //	ft_printf("mbegin %s\n", data->term_cr_move_begin);
 //	ft_printf("mleft %s\n", data->term_le_move_left);
 //	ft_printf("mright %s\n", data->term_nd_move_right);
