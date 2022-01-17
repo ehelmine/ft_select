@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:18:05 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:37:00 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	int	x;
 
 	x = 0;
+	data->i = 0;
 	if (ft_isprint(c) == 1)
 	{
 	//	ft_printf("%d and %c\r\n", c, c);
 		write(STDOUT_FILENO, "\x1b[2J", 4);
 		write(STDOUT_FILENO, "\x1b[H", 3);
-		while (x < data->window_rows)
+	/*	while (x < data->window_rows)
 		{
 			write(STDIN_FILENO, "=\r\n", 3);
 			x++;
-		}
+		}*/
 	}
 	else
 	{
@@ -35,10 +36,24 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	}
 	if (c == 'q')
 	{
+		write(STDOUT_FILENO, "\x1b[2J", 4);
+		write(STDOUT_FILENO, "\x1b[H", 3);
 		stop_raw_mode(orig_t);
 		return (-1);
 	}
 	return (1);
+}
+
+static int	reading(struct termios orig_t, t_select *data)
+{
+	char	c;
+
+	c = '\0';
+	if (read(STDIN_FILENO, &c, 1) > 0)
+	{
+		return (check_read_character(orig_t, c, data));
+	}
+	return (-1);
 }
 
 /*
@@ -54,18 +69,6 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 **
 */
 
-static int	reading(struct termios orig_t, t_select *data)
-{
-	char	c;
-
-	c = '\0';
-	if (read(STDIN_FILENO, &c, 1) > 0)
-	{
-		return (check_read_character(orig_t, c, data));
-	}
-	return (-1);
-}
-
 int	read_loop(int argc, char **argv, struct termios orig_t, t_select *data)
 {
 	int		i;
@@ -78,6 +81,17 @@ int	read_loop(int argc, char **argv, struct termios orig_t, t_select *data)
 	while (1)
 	{
 		get_window_size(data);
+		create_output_str(data);
+	/*	i = 0;
+		while (data->input[i][0] != '\0')
+		{
+			write(STDOUT_FILENO, &data->input[i], ft_strlen(data->input[i]));
+			write(STDOUT_FILENO, "\r\n", 2);
+			i++;
+		}*/
+		write(STDOUT_FILENO, &data->output[i], ft_strlen(data->output));
+		if (data->output)
+			free(data->output);
 		check = reading(orig_t, data);
 		if (check == -1)
 			break ;

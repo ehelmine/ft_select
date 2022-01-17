@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:28:45 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:36:04 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ typedef struct s_select
 	char	*term_pc_padding;
 	char	*term_ti_start_up;
 	char	*term_te_finish;
-
+	int		i;
+	char	*output;
 }				t_select;
 
 int				output_error(int i);
+
+void			create_output_str(t_select *data);
 
 void			get_window_size(t_select *data);
 
