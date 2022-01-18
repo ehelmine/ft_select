@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/18 18:48:12 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:59:33 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 static int	read_escape_character(char c, t_select *data)
 {
-	
+	// READ THREE CHARS? maybe yes.
+	// char buf[3];
+
+	// if ()
+	//check = read(STDIN_FILENO, &buf, 3);
+	//if (check > 0)
+	// if (buf[0] == '[')
+	//	{
+	//		if buf[1] check here all keys that have in the beginning
+	//		esc chars
+	//	}
 }
 
 static int	check_read_character(struct termios orig_t, char c, t_select *data)
