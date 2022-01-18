@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/17 21:10:25 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/18 15:08:12 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_select
 	int		window_columns;
 	int		cursor_x;
 	int		cursor_y;
+	char	*cursor_pos;
 	char	terminal_description[2048];
 	char	*buff_area;
 	char	*term_cm_position;
@@ -52,19 +53,22 @@ typedef struct s_select
 	char	*term_pc_padding;
 	char	*term_ti_start_up;
 	char	*term_te_finish;
-	int		i;
+	int		output_len;
 	char	*output;
+	int		i;
 }				t_select;
 
 int				output_error(int i);
 
-void			create_output_str(t_select *data);
+void			fill_output(t_select *data);
 
 int				get_window_size(t_select *data, int when);
 
 int				get_terminal_info(t_select *data);
 
 int				get_terminal_capabilities(t_select *data);
+
+void			cursor_position(t_select *data);
 
 int				read_loop(struct termios orig_t, t_select *data);
 

@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 11:34:09 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/18 10:36:41 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ struct termios	enter_raw_mode(void)
 	raw_t.c_iflag &= ~(ICRNL | IXON);
 	raw_t.c_oflag &= ~(OPOST);
 	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+	raw_t.c_cc[VMIN] = 0;
+  	raw_t.c_cc[VTIME] = 1;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw_t) == -1)
 	{
 		ft_printf("error with tcsetattr\n");

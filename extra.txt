@@ -1,0 +1,50 @@
+/*
+static void	fill_with_options(char *output, char input[1024][1024], int amount_of_input,
+		int cols)
+{
+	int	x;
+	int	i;
+	int	ii;
+	int	times;
+
+	x = 0;
+	times = 1;
+	i = 0;
+	while (i < amount_of_input)
+	{
+		output[x++] = '[';
+		x++;
+		output[x++] = ']';
+		x++;
+		ii = 0;
+		while (input[i][ii] != '\0')
+			output[x++] = input[i][ii++];
+		x = cols * times++;
+		i++;
+	}
+}*/
+/*
+static void	fill_with_spaces_and_newlines(char *output, int total, int cols, int x)
+{
+	int	i;
+	
+	while (x <= total)
+	{
+		i = 0;
+		while (i < cols - 2 && x <= total)
+		{
+			output[x++] = ' ';
+			i++;
+		}
+	//	output[x - 1] = '%';
+	//	ft_printf("x now: %i\r\n", x - 1);
+		if (x + 2 < total)
+		{
+			output[x++] = '\r';
+			output[x++] = '\n';
+		}
+		else
+			break ;
+	}
+	output[x] = '\0';
+}*/
