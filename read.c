@@ -6,43 +6,73 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/18 18:59:33 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/19 22:08:38 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-static int	read_escape_character(char c, t_select *data)
+int	f_putc(int c)
 {
-	// READ THREE CHARS? maybe yes.
-	// char buf[3];
+	write(STDOUT_FILENO, &c, 1);
+	return (1);
+}
 
-	// if ()
-	//check = read(STDIN_FILENO, &buf, 3);
-	//if (check > 0)
-	// if (buf[0] == '[')
-	//	{
-	//		if buf[1] check here all keys that have in the beginning
-	//		esc chars
-	//	}
+static int	read_escape_character(t_select *data)
+{
+	char	buf[3];
+
+	ft_bzero(buf, 3);
+	if (read(STDIN_FILENO, &buf[0], 1) != 1)
+		return (-1);
+	if (read(STDIN_FILENO, &buf[1], 1) != 1)
+		return (-1);
+	if (buf[0] == '[' && buf[1] == 'A')
+	{
+		if (data->cursor_y == 1)
+			data->cursor_y = data->amount_of_input;
+		else
+			data->cursor_y--;
+	}
+	else if (buf[0] == '[' && buf[1] == 'B')
+	{
+		if (data->cursor_y == data->amount_of_input)
+			data->cursor_y = 1;
+		else
+			data->cursor_y++;
+	}
+	else
+		return (-1);
+	return (1);
 }
 
 static int	check_read_character(struct termios orig_t, char c, t_select *data)
 {
-	int	x;
-
-	x = 0;
-	data->i = 0;
 	if (c == '\x1b')
-		read_escape_character(c, data);
-	if (c == 'q')
 	{
-		write(STDOUT_FILENO, "\x1b[2J\x1b[H", 7);
+		if (read_escape_character(data) == 1)
+			fill_output(data);
+	}
+	else if (c == ' ')
+	{
+		if (data->input_info[data->cursor_y - 1][0] == 0)
+			data->input_info[data->cursor_y - 1][0] = 1;
+		else
+			data->input_info[data->cursor_y - 1][0] = 0;
+		if (data->cursor_y == data->amount_of_input)
+			data->cursor_y = 1;
+		else
+			data->cursor_y++;
+		fill_output(data);
+	}
+	else if (c == 'q')
+	{
+		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
 		stop_raw_mode(orig_t);
 		return (-1);
 	}
-	if (ft_isprint(c) == 1)
-		write(STDOUT_FILENO, "\x1b[2J\x1b[H", 7);
+	else if (ft_isprint(c) == 1)
+		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
 	else
 		return (0);
 	return (1);
@@ -82,9 +112,14 @@ int	read_loop(struct termios orig_t, t_select *data)
 
 	i = 0;
 	get_window_size(data, 0);
+	data->output = NULL;
 	data->cursor_x = 2;
 	data->cursor_y = 1;
-	write(STDOUT_FILENO, "\x1b[2J", 4);
+	ft_memset(data->input_info[0], 0, MAX_INPUT_LEN);
+	ft_memset(data->input_info[1], 0, MAX_INPUT_LEN);
+	ft_memset(data->input_info[2], 0, MAX_INPUT_LEN);
+//	write(STDOUT_FILENO, "\x1b[2J", 4);
+//	tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
 	fill_output(data);
 	while (1)
 	{

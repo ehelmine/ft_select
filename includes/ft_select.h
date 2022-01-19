@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/18 15:08:12 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/19 22:04:03 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_select
 	char	*device_name;
 	char	*terminal_envname;
 	char	input[MAX_INPUT_LEN][MAX_INPUT_LEN];
+	int		input_info[MAX_INPUT_LEN][MAX_INPUT_LEN];
 	int		amount_of_input;
 	int		window_rows;
 	int		window_columns;
@@ -53,6 +54,7 @@ typedef struct s_select
 	char	*term_pc_padding;
 	char	*term_ti_start_up;
 	char	*term_te_finish;
+	char	*term_cl_clear_screen;
 	int		output_len;
 	char	*output;
 	int		i;

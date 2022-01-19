@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:53:36 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/17 21:09:53 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:13:33 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_window_size(t_select *data, int when)
 	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &window) != -1)
 	{
 		if (when > 0 && (data->window_rows != window.ws_row
-			|| data->window_columns != window.ws_col))
+				|| data->window_columns != window.ws_col))
 		{
 			data->window_rows = window.ws_row;
 			data->window_columns = window.ws_col;

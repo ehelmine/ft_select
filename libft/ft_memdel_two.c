@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_two.c                                         :+:      :+:    :+:   */
+/*   ft_memdel_two.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "includes/libft.h"
 
-void	free_two(void **ptr1, void **ptr2)
+void	ft_memdel_two(void **ptr1, void **ptr2)
 {
 	if (*ptr1 != NULL)
 	{

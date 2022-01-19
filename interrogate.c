@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/17 16:29:06 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:16:02 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ int	get_terminal_capabilities(t_select *data)
 	data->term_pc_padding = tgetstr("pc", &data->buff_area);
 	data->term_ti_start_up = tgetstr("ti", &data->buff_area);
 	data->term_te_finish = tgetstr("te", &data->buff_area);
+	data->term_cl_clear_screen = tgetstr("cl", &data->buff_area);
 	print_terminal_capabilities(data);
 //	free((void*)data->buff_area);
 	return (1);

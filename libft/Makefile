@@ -6,7 +6,7 @@
 #    By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/09 13:01:03 by ehelmine          #+#    #+#              #
-#    Updated: 2022/01/06 10:18:28 by ehelmine         ###   ########.fr        #
+#    Updated: 2022/01/19 17:11:58 by ehelmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS = ft_putchar.c ft_putstr.c ft_atoi.c ft_strlen.c ft_strcmp.c ft_putnbr.c \
 	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_lstnew.c \
 	ft_lstadd.c ft_lstdelone.c ft_lstdel.c ft_lstiter.c ft_lstmap.c \
 	ft_check_int_len.c ft_islower.c ft_isupper.c ft_isspace.c ft_strndup.c \
-	get_next_line.c major_bit.c minor_bit.c free_two.c ft_putarr.c ft_arrdup.c \
+	get_next_line.c major_bit.c minor_bit.c ft_memdel_two.c ft_putarr.c ft_arrdup.c \
 	ft_arrnew.c ft_strstr_after.c ft_strjoin_three.c free_arr.c \
 	ft_return_char_index.c ft_strdup_before_char.c ft_strdup_before_whitespace.c \
 	ft_iscntrl.c
