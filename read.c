@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/20 12:26:32 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/20 19:13:14 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,24 @@ int	f_putc(int c)
 {
 	write(STDOUT_FILENO, &c, 1);
 	return (1);
+}
+
+static void	move_lines_one_up(t_select *data)
+{
+	char	tmp[MAX_INPUT_LEN];
+	int		i;
+
+	i = 0;
+	ft_memset(data->input[data->cursor_y - 1], 0, MAX_INPUT_LEN);
+	i = data->cursor_y - 1;
+	while (i < data->amount_of_input - 1)
+	{
+		ft_strcpy(data->input[i], data->input[i + 1]);
+		ft_strcpy(tmp, data->input[i + 1]);
+		ft_memset(data->input[i + 1], 0, MAX_INPUT_LEN);
+		i++;
+	}
+	data->amount_of_input--;
 }
 
 static int	read_escape_character(t_select *data)
@@ -41,6 +59,17 @@ static int	read_escape_character(t_select *data)
 		else
 			data->cursor_y++;
 	}
+	else if (buf[0] == '[' && buf[1] == '3')
+	{
+		if (read(STDIN_FILENO, &buf[2], 1) != 1)
+			return (-1);
+		if (buf[2] == '~')
+		{
+			move_lines_one_up(data);
+			if (data->cursor_y == data->amount_of_input + 1)
+				data->cursor_y = 1;
+		}
+	}
 	else
 		return (-1);
 	return (1);
@@ -51,7 +80,7 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	if (c == '\x1b')
 	{
 		if (read_escape_character(data) == 1)
-			fill_output(data);
+			fill_output(data, orig_t);
 	}
 	else if (c == ' ')
 	{
@@ -63,7 +92,7 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 			data->cursor_y = 1;
 		else
 			data->cursor_y++;
-		fill_output(data);
+		fill_output(data, orig_t);
 	}
 	else if (c == 'q')
 	{
@@ -126,11 +155,11 @@ int	read_loop(struct termios orig_t, t_select *data)
 	i = 0;
 	get_window_size(data, 0);
 	set_start_values(data);
-	fill_output(data);
+	fill_output(data, orig_t);
 	while (1)
 	{
 		if (get_window_size(data, 1) == -1)
-			fill_output(data);
+			fill_output(data, orig_t);
 		if (data->output)
 			write(STDOUT_FILENO, data->output, ft_strlen(data->output));
 		check = reading(orig_t, data);

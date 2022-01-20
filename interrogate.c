@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/19 18:16:02 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/20 18:44:02 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,31 +169,14 @@ int	write_char(int c)
 	return (1);
 }*/
 
-void	print_terminal_capabilities(t_select *data)
+void	print_terminal_capabilities(void)
 {
-	char	c;
 
 //	ft_printf("posit %s\n", data->term_cm_position);
-//	ft_printf("mbegin %s\n", data->term_cr_move_begin);
-//	ft_printf("mleft %s\n", data->term_le_move_left);
-//	ft_printf("mright %s\n", data->term_nd_move_right);
-//	ft_printf("mup %s\n", data->term_up_move_up);
-//	ft_printf("mdown %s\n", data->term_do_move_down);
-//	ft_printf("wrbegin %i\n", data->term_am_wrap_begin);
-//	ft_printf("wrsafe %i\n", data->term_big_lp_wrap_safe);
-//	ft_printf("wrweird %i\n", data->term_xn_wrap_weird);
-//	ft_printf("delline %s\n", data->term_dl_delete_line);
-//	ft_printf("delchar %s\n", data->term_dc_delete_char);
-//	ft_printf("delnchar %s\n", data->term_big_dc_delete_nchar);
-//	ft_printf("enterdmode %s\n", data->term_dm_enter_delmode);
-//	ft_printf("exitdmode %s\n", data->term_ed_exit_delmode);
 //	ft_printf("arrow r %s\n", data->term_kr_right_arrow);
 //	ft_printf("arrow u %s\n", data->term_ku_up_arrow);
 //	ft_printf("arrow d %s\n", data->term_kd_down_arrow);
 //	ft_printf("padding %s\n", data->term_pc_padding);
-	c = 1;
-	if (data->term_pc_padding == NULL)
-		c = 0;
 //	tputs(data->term_ti_start_up, 1, &write_char);
 }
 
@@ -201,39 +184,16 @@ int	get_terminal_capabilities(t_select *data)
 {
 	data->buff_area = (char *)ft_memalloc(2048);
 	data->term_cm_position = tgetstr("cm", &data->buff_area);
-	data->term_cr_move_begin = tgetstr("cr", &data->buff_area);
-	data->term_le_move_left = tgetstr("le", &data->buff_area);
-	// check bw value for move_left
-	data->term_nd_move_right = tgetstr("nd", &data->buff_area);
-	// dont use in right margin, even if `am' is present
-	data->term_up_move_up = tgetstr("up", &data->buff_area);
-	// dont use when on the top line
-	data->term_do_move_down = tgetstr("do", &data->buff_area);
-	// dont use when on the bottom line
-	// a program which sends the `do' string must disable output
-	// conversion in the kernel (see section Initialization for Use of Termcap)
-	data->term_am_wrap_begin = tgetflag("am");
-	data->term_xn_wrap_weird = tgetflag("xn");
-	data->term_big_lp_wrap_safe = tgetflag("LP");
-	// we want it to wrap -> we want am to be present
-	data->term_dl_delete_line = tgetstr("dl", &data->buff_area);
-	// When outputting an insert or delete command with tputs, the nlines
-	// argument should be the total number of lines from the cursor to the
-	// bottom of the screen (or scroll region). Very often these commands
-	//require padding proportional to this number of lines. See section Padding.
-	data->term_dc_delete_char = tgetstr("dc", &data->buff_area);
-	data->term_big_dc_delete_nchar = tgetstr("DC", &data->buff_area);
-	data->term_dm_enter_delmode = tgetstr("dm", &data->buff_area);
-	data->term_ed_exit_delmode = tgetstr("ed", &data->buff_area);
 	data->term_kl_left_arrow = tgetstr("kl", &data->buff_area);
 	data->term_kr_right_arrow = tgetstr("kr", &data->buff_area);
 	data->term_ku_up_arrow = tgetstr("ku", &data->buff_area);
 	data->term_kd_down_arrow = tgetstr("kd", &data->buff_area);
-	data->term_pc_padding = tgetstr("pc", &data->buff_area);
-	data->term_ti_start_up = tgetstr("ti", &data->buff_area);
-	data->term_te_finish = tgetstr("te", &data->buff_area);
 	data->term_cl_clear_screen = tgetstr("cl", &data->buff_area);
-	print_terminal_capabilities(data);
+	data->term_us_start_uline = tgetstr("us", &data->buff_area);
+	data->term_ue_stop_uline = tgetstr("ue", &data->buff_area);
+	data->term_mr_video = tgetstr("mr", &data->buff_area);
+	data->term_me_off_app = tgetstr("me", &data->buff_area);
+	print_terminal_capabilities();
 //	free((void*)data->buff_area);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/20 12:18:45 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/20 18:59:27 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,15 @@ typedef struct s_select
 	char	terminal_description[2048];
 	char	*buff_area;
 	char	*term_cm_position;
-	char	*term_cr_move_begin;
-	char	*term_le_move_left;
-	char	*term_nd_move_right;
-	char	*term_up_move_up;
-	char	*term_do_move_down;
-	int		term_am_wrap_begin;
-	int		term_big_lp_wrap_safe;
-	int		term_xn_wrap_weird;
-	char	*term_dl_delete_line;
-	char	*term_dc_delete_char;
-	char	*term_big_dc_delete_nchar;
-	char	*term_dm_enter_delmode;
-	char	*term_ed_exit_delmode;
 	char	*term_kl_left_arrow;
 	char	*term_kr_right_arrow;
 	char	*term_ku_up_arrow;
 	char	*term_kd_down_arrow;
-	char	*term_pc_padding;
-	char	*term_ti_start_up;
-	char	*term_te_finish;
 	char	*term_cl_clear_screen;
+	char	*term_us_start_uline;
+	char	*term_ue_stop_uline;
+	char	*term_mr_video;
+	char	*term_me_off_app;
 	int		output_len;
 	char	*output;
 	int		i;
@@ -63,7 +51,7 @@ typedef struct s_select
 
 int				output_error(int i);
 
-void			fill_output(t_select *data);
+void			fill_output(t_select *data, struct termios orig_t);
 
 int				get_window_size(t_select *data, int when);
 
