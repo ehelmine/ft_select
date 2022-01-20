@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/19 22:04:03 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:18:45 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_select
 {
 	char	*device_name;
 	char	*terminal_envname;
+	int		down;
 	char	input[MAX_INPUT_LEN][MAX_INPUT_LEN];
 	int		input_info[MAX_INPUT_LEN][MAX_INPUT_LEN];
 	int		amount_of_input;

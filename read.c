@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/19 22:08:38 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:26:32 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,19 @@ static int	reading(struct termios orig_t, t_select *data)
 	return (-1);
 }
 
+static void	set_start_values(t_select *data)
+{
+	int	i;
+
+	i = 0;
+	data->output = NULL;
+	data->cursor_x = 2;
+	data->cursor_y = 1;
+	data->down = 0;
+	while (i < MAX_INPUT_LEN)
+		ft_memset(data->input_info[i++], 0, MAX_INPUT_LEN);
+}
+
 /*
 ** \x1b[2J explanation:
 ** \x1b is escape character (27)
@@ -112,20 +125,14 @@ int	read_loop(struct termios orig_t, t_select *data)
 
 	i = 0;
 	get_window_size(data, 0);
-	data->output = NULL;
-	data->cursor_x = 2;
-	data->cursor_y = 1;
-	ft_memset(data->input_info[0], 0, MAX_INPUT_LEN);
-	ft_memset(data->input_info[1], 0, MAX_INPUT_LEN);
-	ft_memset(data->input_info[2], 0, MAX_INPUT_LEN);
-//	write(STDOUT_FILENO, "\x1b[2J", 4);
-//	tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+	set_start_values(data);
 	fill_output(data);
 	while (1)
 	{
 		if (get_window_size(data, 1) == -1)
 			fill_output(data);
-		write(STDOUT_FILENO, data->output, ft_strlen(data->output));
+		if (data->output)
+			write(STDOUT_FILENO, data->output, ft_strlen(data->output));
 		check = reading(orig_t, data);
 		if (check == -1)
 			break ;

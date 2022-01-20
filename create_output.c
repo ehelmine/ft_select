@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:56:01 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/19 22:04:42 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/20 12:26:19 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	fill_output(t_select *data)
 		ft_memdel((void *)&data->output);
 	data->output_len = 0;
 	append_to_str(data, data->term_cl_clear_screen);
-	//append_to_str(data, data->term_cm_position);
-	//append_to_str(data, "\r\n");
 	while (i < data->amount_of_input)
 	{
 		if (data->input_info[i][0] == 1)
@@ -50,6 +48,8 @@ void	fill_output(t_select *data)
 		else
 			append_to_str(data, "[ ] ");
 		append_to_str(data, data->input[i]);
+		if (i == data->window_rows - 1)
+			break ;
 		if (i < data->amount_of_input - 1)
 			append_to_str(data, "\r\n");
 		i++;
@@ -57,6 +57,3 @@ void	fill_output(t_select *data)
 	cursor_position(data);
 	append_to_str(data, data->cursor_pos);
 }
-
-// if (data->input_check == 1)
-		//		append_to_str(data, "[x] ");
