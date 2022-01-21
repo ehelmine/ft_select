@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:56:01 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/20 19:06:09 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/21 11:52:40 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	append_to_str(t_select *data, char *new)
 // \x1b[?25l = hide cursor
 // \x1b[?25h = show cursor
 
-void	fill_output(t_select *data, struct termios orig_t)
+void	fill_output(t_select *data)
 {
 	int	i;
 
@@ -41,14 +41,6 @@ void	fill_output(t_select *data, struct termios orig_t)
 		ft_memdel((void *)&data->output);
 	data->output_len = 0;
 	append_to_str(data, data->term_cl_clear_screen);
-	if (data->amount_of_input == 0)
-	{
-		write(STDOUT_FILENO, data->output, ft_strlen(data->output));
-		stop_raw_mode(orig_t);
-		if (data->output != NULL)
-			ft_memdel((void *)&data->output);
-		exit (0);
-	}
 	while (i < data->amount_of_input)
 	{
 		if (i == data->cursor_y - 1)

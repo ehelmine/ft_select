@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/20 18:59:27 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/21 11:55:38 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ typedef struct s_select
 	char	terminal_description[2048];
 	char	*buff_area;
 	char	*term_cm_position;
-	char	*term_kl_left_arrow;
-	char	*term_kr_right_arrow;
-	char	*term_ku_up_arrow;
-	char	*term_kd_down_arrow;
+//	char	*term_kl_left_arrow;
+//	char	*term_kr_right_arrow;
+//	char	*term_ku_up_arrow;
+//	char	*term_kd_down_arrow;
 	char	*term_cl_clear_screen;
 	char	*term_us_start_uline;
 	char	*term_ue_stop_uline;
@@ -51,7 +51,7 @@ typedef struct s_select
 
 int				output_error(int i);
 
-void			fill_output(t_select *data, struct termios orig_t);
+void			fill_output(t_select *data);
 
 int				get_window_size(t_select *data, int when);
 
@@ -65,5 +65,10 @@ int				read_loop(struct termios orig_t, t_select *data);
 
 struct termios	enter_raw_mode(void);
 void			stop_raw_mode(struct termios orig_t);
+
+void			delete_option(t_select *data, struct termios orig_t);
+void			move_lines_one_up(t_select *data);
+
+int				f_putc(int c);
 
 #endif

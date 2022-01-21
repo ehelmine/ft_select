@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/20 19:13:14 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/21 12:08:16 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,7 @@ int	f_putc(int c)
 	return (1);
 }
 
-static void	move_lines_one_up(t_select *data)
-{
-	char	tmp[MAX_INPUT_LEN];
-	int		i;
-
-	i = 0;
-	ft_memset(data->input[data->cursor_y - 1], 0, MAX_INPUT_LEN);
-	i = data->cursor_y - 1;
-	while (i < data->amount_of_input - 1)
-	{
-		ft_strcpy(data->input[i], data->input[i + 1]);
-		ft_strcpy(tmp, data->input[i + 1]);
-		ft_memset(data->input[i + 1], 0, MAX_INPUT_LEN);
-		i++;
-	}
-	data->amount_of_input--;
-}
-
-static int	read_escape_character(t_select *data)
+static int	read_escape_character(t_select *data, struct termios orig_t)
 {
 	char	buf[3];
 
@@ -64,11 +46,7 @@ static int	read_escape_character(t_select *data)
 		if (read(STDIN_FILENO, &buf[2], 1) != 1)
 			return (-1);
 		if (buf[2] == '~')
-		{
-			move_lines_one_up(data);
-			if (data->cursor_y == data->amount_of_input + 1)
-				data->cursor_y = 1;
-		}
+			delete_option(data, orig_t);
 	}
 	else
 		return (-1);
@@ -79,8 +57,19 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 {
 	if (c == '\x1b')
 	{
-		if (read_escape_character(data) == 1)
-			fill_output(data, orig_t);
+		if (read_escape_character(data, orig_t) == 1)
+			fill_output(data);
+		else
+		{
+			tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+			stop_raw_mode(orig_t);
+			return (-1);
+		}
+	}
+	else if (c == 127)
+	{
+		delete_option(data, orig_t);
+		fill_output(data);
 	}
 	else if (c == ' ')
 	{
@@ -92,16 +81,8 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 			data->cursor_y = 1;
 		else
 			data->cursor_y++;
-		fill_output(data, orig_t);
+		fill_output(data);
 	}
-	else if (c == 'q')
-	{
-		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
-		stop_raw_mode(orig_t);
-		return (-1);
-	}
-	else if (ft_isprint(c) == 1)
-		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
 	else
 		return (0);
 	return (1);
@@ -155,11 +136,28 @@ int	read_loop(struct termios orig_t, t_select *data)
 	i = 0;
 	get_window_size(data, 0);
 	set_start_values(data);
-	fill_output(data, orig_t);
+	fill_output(data);
 	while (1)
 	{
+		// add something after window size check (or inside there?)
+		// that does some checking if everything fits in to the terminal
+		// after resizing: compare window_cols to input lengths ->
+		// if one input is longer than window, it needs to go to next row partly
+		// and we need to maybe add to fill_output a variable (int change_row) that takes its
+		// value from data->input_info[n][1] -> it tells, how many rows we go down after
+		// that input sentence has been written out
+		// WHAT ABOUT
+		// we have wide terminal, but short in height -> we need to write first things to 
+		// first "columns", and then CONTINUE WRITING NEXT TO THEM? HOW?????
+		// -> compare amount_of_input to window_rows
+		// -> if amount of input is more than rows, we need to check if there's space
+		// for multiple columns
+		// -> check length of inputs
+		// --> data->input_info[n][0] has selection info 0 or 1
+		// --> data->input_info[n][1] has len info for the input
+		// --> data->input_info[n][1] has info how many rows we go down (amount of splits to rows)
 		if (get_window_size(data, 1) == -1)
-			fill_output(data, orig_t);
+			fill_output(data);	
 		if (data->output)
 			write(STDOUT_FILENO, data->output, ft_strlen(data->output));
 		check = reading(orig_t, data);
