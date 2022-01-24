@@ -6,16 +6,39 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/21 12:08:16 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:12:07 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-int	f_putc(int c)
+void	arrow_move_or_tick_box(t_select *data, char letter)
 {
-	write(STDOUT_FILENO, &c, 1);
-	return (1);
+	if (letter == 'A')
+	{
+		if (data->cursor_y == 1)
+			data->cursor_y = data->amount_of_input;
+		else
+			data->cursor_y--;
+	}
+	else if (letter == 'B')
+	{
+		if (data->cursor_y == data->amount_of_input)
+			data->cursor_y = 1;
+		else
+			data->cursor_y++;
+	}
+	else if (letter == ' ')
+	{
+		if (data->input_info[data->cursor_y - 1][0] == 0)
+			data->input_info[data->cursor_y - 1][0] = 1;
+		else
+			data->input_info[data->cursor_y - 1][0] = 0;
+		if (data->cursor_y == data->amount_of_input)
+			data->cursor_y = 1;
+		else
+			data->cursor_y++;
+	}
 }
 
 static int	read_escape_character(t_select *data, struct termios orig_t)
@@ -27,20 +50,8 @@ static int	read_escape_character(t_select *data, struct termios orig_t)
 		return (-1);
 	if (read(STDIN_FILENO, &buf[1], 1) != 1)
 		return (-1);
-	if (buf[0] == '[' && buf[1] == 'A')
-	{
-		if (data->cursor_y == 1)
-			data->cursor_y = data->amount_of_input;
-		else
-			data->cursor_y--;
-	}
-	else if (buf[0] == '[' && buf[1] == 'B')
-	{
-		if (data->cursor_y == data->amount_of_input)
-			data->cursor_y = 1;
-		else
-			data->cursor_y++;
-	}
+	if (buf[0] == '[' && (buf[1] == 'A' || buf[1] == 'B'))
+		arrow_move_or_tick_box(data, buf[1]);
 	else if (buf[0] == '[' && buf[1] == '3')
 	{
 		if (read(STDIN_FILENO, &buf[2], 1) != 1)
@@ -50,6 +61,7 @@ static int	read_escape_character(t_select *data, struct termios orig_t)
 	}
 	else
 		return (-1);
+	fill_output(data);	
 	return (1);
 }
 
@@ -57,15 +69,15 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 {
 	if (c == '\x1b')
 	{
-		if (read_escape_character(data, orig_t) == 1)
-			fill_output(data);
-		else
+		if (read_escape_character(data, orig_t) == -1)
 		{
 			tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
 			stop_raw_mode(orig_t);
 			return (-1);
 		}
 	}
+	else if (c == 13)
+		write_options(data, orig_t);
 	else if (c == 127)
 	{
 		delete_option(data, orig_t);
@@ -73,14 +85,7 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	}
 	else if (c == ' ')
 	{
-		if (data->input_info[data->cursor_y - 1][0] == 0)
-			data->input_info[data->cursor_y - 1][0] = 1;
-		else
-			data->input_info[data->cursor_y - 1][0] = 0;
-		if (data->cursor_y == data->amount_of_input)
-			data->cursor_y = 1;
-		else
-			data->cursor_y++;
+		arrow_move_or_tick_box(data, ' ');
 		fill_output(data);
 	}
 	else

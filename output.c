@@ -1,16 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_output.c                                    :+:      :+:    :+:   */
+/*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 11:56:01 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/21 11:52:40 by ehelmine         ###   ########.fr       */
+/*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
+/*   Updated: 2022/01/24 19:45:18 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+void	write_options(t_select *data, struct termios orig_t)
+{
+	int	i;
+	int	first;
+
+	i = 0;
+	first = 0;
+	tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+	if (data->output != NULL)
+		ft_memdel((void *)&data->output);
+	stop_raw_mode(orig_t);
+	while (data->input[i][0] != '\0')
+	{
+		if (data->input_info[i][0] == 1)
+		{
+			if (first != 0)
+				write(STDOUT_FILENO, " ", 1);
+			first = 1;
+			write(STDOUT_FILENO, &data->input[i], ft_strlen(data->input[i]));
+		}
+		i++;
+	}
+	write(STDOUT_FILENO, "\n", 1);
+	exit (0);
+}
+
+int	f_putc(int c)
+{
+	write(STDOUT_FILENO, &c, 1);
+	return (1);
+}
 
 static void	append_to_str(t_select *data, char *new)
 {

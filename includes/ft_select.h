@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/21 11:55:38 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/24 16:56:12 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_select
 	int		i;
 }				t_select;
 
-int				output_error(int i);
+void			output_error(int i);
 
 void			fill_output(t_select *data);
 
@@ -70,5 +70,6 @@ void			delete_option(t_select *data, struct termios orig_t);
 void			move_lines_one_up(t_select *data);
 
 int				f_putc(int c);
+void			write_options(t_select *data, struct termios orig_t);
 
 #endif

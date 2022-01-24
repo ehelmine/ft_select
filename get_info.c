@@ -1,16 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interrogate.c                                      :+:      :+:    :+:   */
+/*   get_info.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 11:58:19 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/21 11:08:36 by ehelmine         ###   ########.fr       */
+/*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
+/*   Updated: 2022/01/24 19:21:54 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+/*
+** TIOCGWINSZ
+** Terminal IOCtl (stands for Input/Output Control) Get WINdow SiZe
+*/
+
+int	get_window_size(t_select *data, int when)
+{
+	struct winsize	window;
+
+	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &window) != -1)
+	{
+		if (when > 0 && (data->window_rows != window.ws_row
+				|| data->window_columns != window.ws_col))
+		{
+			data->window_rows = window.ws_row;
+			data->window_columns = window.ws_col;
+			return (-1);
+		}
+		data->window_rows = window.ws_row;
+		data->window_columns = window.ws_col;
+		return (1);
+		//ft_printf("lines %i columns %i\r\n", window.ws_row, window.ws_col);
+	}
+	ft_printf("check rows and columns\n");
+	data->window_rows = 25;
+	data->window_columns = 50;
+	return (1);
+	// add here the window size checking with the hard way
+	// kind of looping through the window with esc sequence commands
+}
 
 /*
 ** int tgetnum (char *name);
@@ -57,5 +88,46 @@ int	get_terminal_capabilities(t_select *data)
 	data->term_mr_video = tgetstr("mr", &data->buff_area);
 	data->term_me_off_app = tgetstr("me", &data->buff_area);
 //	free((void*)data->buff_area);
+	return (1);
+}
+
+/*
+** isatty function determines if the file descriptor fd refers to a
+** valid terminal type device.
+**
+** ttyname() function gets the related device name of a file descriptor
+** for which isatty() is true.
+** The ttyname() function returns the name stored in a static buffer which
+** will be overwritten on subsequent calls.
+**
+** int tgetent (char *buffer, char *termtype);
+** This function finds the description and remembers it internally so that
+** you can interrogate it about specific terminal capabilities
+** The return value of tgetent is -1 if there is some difficulty accessing
+** the data base of terminal types, 0 if the data base is accessible but
+** the specified type is not defined in it, and some other value otherwise.
+*/
+
+int	get_terminal_info(t_select *data)
+{
+	int	check;
+
+	if (isatty(ttyslot()))
+	{
+		data->device_name = ttyname(ttyslot());
+		if (data->device_name == NULL)
+			output_error(0);
+	}
+	else
+		output_error(0);
+	data->terminal_envname = getenv("TERM");
+	if (data->terminal_envname == NULL)
+		output_error(1);
+	check = tgetent(data->terminal_description, data->terminal_envname);
+	if (check == -1)
+		output_error(2);
+	else if (check == 0)
+		output_error(3);
+	get_terminal_capabilities(data);
 	return (1);
 }
