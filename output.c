@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/24 19:45:18 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/25 15:52:32 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	fill_output(t_select *data)
 			append_to_str(data, data->term_me_off_app);
 		if (i == data->window_rows - 1)
 			break ;
-		if (i < data->amount_of_input - 1)
+		if (i < data->amount_of_input - 1 || i == 0)
 			append_to_str(data, "\r\n");
 		i++;
 	}

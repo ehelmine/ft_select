@@ -6,7 +6,7 @@
 #    By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 12:59:07 by ehelmine          #+#    #+#              #
-#    Updated: 2022/01/24 19:22:01 by ehelmine         ###   ########.fr        #
+#    Updated: 2022/01/25 11:23:38 by ehelmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ TEST_OBJS_DIR = objs/test_objs
 
 OBJS = $(addprefix $(OBJS_DIR)/$(INPUT_OBJS_DIR)/, $(SRCS:.c=.o))
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 all: $(NAME)
 

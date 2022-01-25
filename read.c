@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/24 19:12:07 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/25 15:50:02 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ static int	read_escape_character(t_select *data, struct termios orig_t)
 			return (-1);
 		if (buf[2] == '~')
 			delete_option(data, orig_t);
+		return (1);
 	}
 	else
-		return (-1);
+		return (1);
 	fill_output(data);	
 	return (1);
 }
@@ -164,7 +165,10 @@ int	read_loop(struct termios orig_t, t_select *data)
 		if (get_window_size(data, 1) == -1)
 			fill_output(data);	
 		if (data->output)
+		{
 			write(STDOUT_FILENO, data->output, ft_strlen(data->output));
+			ft_memdel((void *)&data->output);
+		}
 		check = reading(orig_t, data);
 		if (check == -1)
 			break ;

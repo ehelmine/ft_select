@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/24 19:21:54 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/25 15:50:56 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,14 @@ int	get_window_size(t_select *data, int when)
 
 int	get_terminal_capabilities(t_select *data)
 {
-	data->buff_area = (char *)ft_memalloc(2048);
+	data->buff_area = (char *)malloc(sizeof(char) * 2048);
 	data->term_cm_position = tgetstr("cm", &data->buff_area);
-//	data->term_kl_left_arrow = tgetstr("kl", &data->buff_area);
-//	data->term_kr_right_arrow = tgetstr("kr", &data->buff_area);
-//	data->term_ku_up_arrow = tgetstr("ku", &data->buff_area);
-//	data->term_kd_down_arrow = tgetstr("kd", &data->buff_area);
 	data->term_cl_clear_screen = tgetstr("cl", &data->buff_area);
 	data->term_us_start_uline = tgetstr("us", &data->buff_area);
 	data->term_ue_stop_uline = tgetstr("ue", &data->buff_area);
 	data->term_mr_video = tgetstr("mr", &data->buff_area);
 	data->term_me_off_app = tgetstr("me", &data->buff_area);
-//	free((void*)data->buff_area);
+//	ft_memdel((void*)&data->buff_area);
 	return (1);
 }
 
@@ -111,7 +107,7 @@ int	get_terminal_capabilities(t_select *data)
 int	get_terminal_info(t_select *data)
 {
 	int	check;
-
+	
 	if (isatty(ttyslot()))
 	{
 		data->device_name = ttyname(ttyslot());

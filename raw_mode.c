@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/19 17:13:11 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/25 15:58:14 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	stop_raw_mode(struct termios orig_t)
 {
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_t) == -1)
+	if (tcsetattr(STDOUT_FILENO, TCSAFLUSH, &orig_t) == -1)
 	{
-		ft_printf("error with tcsetattr\n");
+		write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
 		exit (1);
 	}
 }
@@ -52,7 +52,7 @@ struct termios	enter_raw_mode(void)
 
 	if (tcgetattr(STDIN_FILENO, &orig_t) == -1)
 	{
-		ft_printf("error with tcgetattr\n");
+		write(STDOUT_FILENO, "error with tcgetattr\n", 21);
 		exit (1);
 	}
 	raw_t = orig_t;
@@ -61,9 +61,10 @@ struct termios	enter_raw_mode(void)
 	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
 	raw_t.c_cc[VMIN] = 0;
 	raw_t.c_cc[VTIME] = 1;
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw_t) == -1)
+	if (tcsetattr(STDOUT_FILENO, TCSAFLUSH, &raw_t) == -1)
 	{
-		ft_printf("error with tcsetattr\n");
+		stop_raw_mode(orig_t);
+		write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
 		exit (1);
 	}
 	return (orig_t);
