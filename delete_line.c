@@ -6,11 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 11:36:18 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/25 15:52:35 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/27 10:18:58 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+extern t_select *data_plus;
 
 void	move_lines_one_up(t_select *data)
 {
@@ -25,11 +27,14 @@ void	move_lines_one_up(t_select *data)
 		i++;
 	}
 	data->input_info[data->cursor_y - 1][0] = 0;
+	data->input_info[data->cursor_y - 1][1] = 0;
 	i = data->cursor_y - 1;
 	while (i < data->amount_of_input - 1)
 	{
 		data->input_info[i][0] = data->input_info[i + 1][0];
+		data->input_info[i][1] = data->input_info[i + 1][1];
 		data->input_info[i + 1][0] = 0;
+		data->input_info[i + 1][1] = 0;
 		i++;
 	}
 	data->amount_of_input--;
@@ -43,7 +48,7 @@ void	delete_option(t_select *data, struct termios orig_t)
 	if (data->amount_of_input == 0)
 	{
 		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
-		stop_raw_mode(orig_t);
+		stop_raw_mode(orig_t, data);
 		if (data->output != NULL)
 			ft_memdel((void *)&data->output);
 		exit (0);

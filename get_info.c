@@ -6,11 +6,56 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/25 15:50:56 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/27 11:51:35 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+extern t_select *data_plus;
+
+static void	check_amount_of_output_cols(t_select *data)
+{
+	int	check;
+	int	i;
+	int	len;
+	int	biggest_len_f;
+	int	biggest_len_s;
+
+	check = 1;
+	while (data->amount_of_input - (data->window_rows * check) > 0)
+		check++;
+	data->output_cols = check;
+	check = 1;
+	i = 0;
+	biggest_len_f = 0;
+	biggest_len_s = 0;
+	while (data->input[i][0] != '\0' && i < data->window_rows * check)
+	{
+		len = ft_strlen(data->input[i]);
+		if (len > biggest_len_f)
+			biggest_len_f = len;
+		i++;
+	}
+	while (check <= data->output_cols)
+	{
+		check++;
+		while (data->input[i][0] != '\0' && i < data->window_rows * check)
+		{
+			len = ft_strlen(data->input[i]);
+			if (len > biggest_len_s)
+				biggest_len_s = len;
+			i++;
+		}
+		if (biggest_len_f + 3 + biggest_len_s > data->window_columns)
+		{
+			data->output_cols--;
+			break ;
+		}
+		else
+			biggest_len_f = biggest_len_s;
+	}
+}
 
 /*
 ** TIOCGWINSZ
@@ -21,23 +66,25 @@ int	get_window_size(t_select *data, int when)
 {
 	struct winsize	window;
 
-	if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &window) != -1)
+	if (ioctl(data->fd_out, TIOCGWINSZ, &window) != -1)
 	{
 		if (when > 0 && (data->window_rows != window.ws_row
 				|| data->window_columns != window.ws_col))
 		{
 			data->window_rows = window.ws_row;
 			data->window_columns = window.ws_col;
+			check_amount_of_output_cols(data);
 			return (-1);
 		}
 		data->window_rows = window.ws_row;
 		data->window_columns = window.ws_col;
+		check_amount_of_output_cols(data);
 		return (1);
 		//ft_printf("lines %i columns %i\r\n", window.ws_row, window.ws_col);
 	}
-	ft_printf("check rows and columns\n");
 	data->window_rows = 25;
 	data->window_columns = 50;
+	check_amount_of_output_cols(data);
 	return (1);
 	// add here the window size checking with the hard way
 	// kind of looping through the window with esc sequence commands
@@ -108,14 +155,20 @@ int	get_terminal_info(t_select *data)
 {
 	int	check;
 	
-	if (isatty(ttyslot()))
+/*	if (isatty(ttyslot()))
 	{
 		data->device_name = ttyname(ttyslot());
 		if (data->device_name == NULL)
 			output_error(0);
 	}
 	else
-		output_error(0);
+		output_error(0);*/
+	data->fd_out = 1;
+	if (isatty(1) == 0)
+		data->fd_out = open(ttyname(ttyslot()), O_WRONLY);
+	data->fd_in = 0;
+	if (isatty(0) == 0)
+		data->fd_in = open(ttyname(ttyslot()), O_RDONLY);
 	data->terminal_envname = getenv("TERM");
 	if (data->terminal_envname == NULL)
 		output_error(1);

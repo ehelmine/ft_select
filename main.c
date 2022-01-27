@@ -6,11 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/25 15:53:04 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:09:48 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+t_select *data_plus;
 
 /*
 ** Write the arguments we just got as input to output.
@@ -44,10 +46,11 @@ int	main(int argc, char **argv)
 	else
 	{
 		ft_memset(&data, 0, sizeof(t_select));
+		data_plus = &data;
 		args_to_struct(argc, argv, &data);
 		if (get_terminal_info(&data) != -1)
 		{
-			orig_t = enter_raw_mode();
+			orig_t = enter_raw_mode(&data);
 			read_loop(orig_t, &data);
 		}
 	}

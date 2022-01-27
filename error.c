@@ -6,11 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:30:24 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/24 19:54:17 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/27 10:10:53 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+extern t_select *data_plus;
 
 void	output_error(int i)
 {

@@ -6,11 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/25 15:52:32 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/27 12:04:17 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+extern t_select *data_plus;
 
 void	write_options(t_select *data, struct termios orig_t)
 {
@@ -22,7 +24,7 @@ void	write_options(t_select *data, struct termios orig_t)
 	tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
 	if (data->output != NULL)
 		ft_memdel((void *)&data->output);
-	stop_raw_mode(orig_t);
+	stop_raw_mode(orig_t, data);
 	while (data->input[i][0] != '\0')
 	{
 		if (data->input_info[i][0] == 1)
@@ -40,7 +42,7 @@ void	write_options(t_select *data, struct termios orig_t)
 
 int	f_putc(int c)
 {
-	write(STDOUT_FILENO, &c, 1);
+	write(data_plus->fd_out, &c, 1);
 	return (1);
 }
 
@@ -61,20 +63,12 @@ static void	append_to_str(t_select *data, char *new)
 	data->output_len += ft_strlen(new);
 }
 
-// \x1b[?25l = hide cursor
-// \x1b[?25h = show cursor
-
-void	fill_output(t_select *data)
+void	fill_extra_cols(t_select *data, int i, int x)
 {
-	int	i;
-
-	i = 0;
-	if (data->output != NULL)
-		ft_memdel((void *)&data->output);
-	data->output_len = 0;
-	append_to_str(data, data->term_cl_clear_screen);
-	while (i < data->amount_of_input)
+	i += data->window_rows * (x + 1);
+	if (data->input[i][0] != '\0')
 	{
+		append_to_str(data, "   ");
 		if (i == data->cursor_y - 1)
 			append_to_str(data, data->term_us_start_uline);
 		if (data->input_info[i][0] == 1)
@@ -89,6 +83,41 @@ void	fill_output(t_select *data)
 			append_to_str(data, data->term_ue_stop_uline);
 		if (data->input_info[i][0] == 1)
 			append_to_str(data, data->term_me_off_app);
+	}
+}
+
+// \x1b[?25l = hide cursor
+// \x1b[?25h = show cursor
+
+void	fill_output(t_select *data)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	if (data->output != NULL)
+		ft_memdel((void *)&data->output);
+	data->output_len = 0;
+	append_to_str(data, data->term_cl_clear_screen);
+	while (i < data->amount_of_input)
+	{
+		x = 0;
+		if (i == data->cursor_y - 1)
+			append_to_str(data, data->term_us_start_uline);
+		if (data->input_info[i][0] == 1)
+		{
+			append_to_str(data, data->term_mr_video);
+			append_to_str(data, "[x] ");
+		}
+		else
+			append_to_str(data, "[ ] ");
+		append_to_str(data, data->input[i]);
+		if (i == data->cursor_y - 1)
+			append_to_str(data, data->term_ue_stop_uline);
+		if (data->input_info[i][0] == 1)
+			append_to_str(data, data->term_me_off_app);
+		while (x < data->output_cols - 1)
+			fill_extra_cols(data, i, x++);
 		if (i == data->window_rows - 1)
 			break ;
 		if (i < data->amount_of_input - 1 || i == 0)

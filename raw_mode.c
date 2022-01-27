@@ -6,15 +6,17 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/25 15:58:14 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/27 10:10:29 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-void	stop_raw_mode(struct termios orig_t)
+extern t_select *data_plus;
+
+void	stop_raw_mode(struct termios orig_t, t_select *data)
 {
-	if (tcsetattr(STDOUT_FILENO, TCSAFLUSH, &orig_t) == -1)
+	if (tcsetattr(data->fd_out, TCSAFLUSH, &orig_t) == -1)
 	{
 		write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
 		exit (1);
@@ -45,7 +47,7 @@ void	stop_raw_mode(struct termios orig_t)
 ** ISIG flag turn off = 
 */
 
-struct termios	enter_raw_mode(void)
+struct termios	enter_raw_mode(t_select *data)
 {
 	struct termios	orig_t;
 	struct termios	raw_t;
@@ -61,9 +63,9 @@ struct termios	enter_raw_mode(void)
 	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
 	raw_t.c_cc[VMIN] = 0;
 	raw_t.c_cc[VTIME] = 1;
-	if (tcsetattr(STDOUT_FILENO, TCSAFLUSH, &raw_t) == -1)
+	if (tcsetattr(data->fd_out, TCSAFLUSH, &raw_t) == -1)
 	{
-		stop_raw_mode(orig_t);
+		stop_raw_mode(orig_t, data);
 		write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
 		exit (1);
 	}

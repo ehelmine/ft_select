@@ -6,11 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/25 15:50:02 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/27 13:14:37 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+extern t_select *data_plus;
 
 void	arrow_move_or_tick_box(t_select *data, char letter)
 {
@@ -73,7 +75,7 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 		if (read_escape_character(data, orig_t) == -1)
 		{
 			tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
-			stop_raw_mode(orig_t);
+			stop_raw_mode(orig_t, data);
 			return (-1);
 		}
 	}
@@ -100,7 +102,7 @@ static int	reading(struct termios orig_t, t_select *data)
 	int		check;
 
 	c = '\0';
-	check = read(STDIN_FILENO, &c, 1);
+	check = read(data->fd_in, &c, 1);
 	if (check > 0)
 		return (check_read_character(orig_t, c, data));
 	else if (check == 0)
@@ -116,9 +118,14 @@ static void	set_start_values(t_select *data)
 	data->output = NULL;
 	data->cursor_x = 2;
 	data->cursor_y = 1;
-	data->down = 0;
 	while (i < MAX_INPUT_LEN)
 		ft_memset(data->input_info[i++], 0, MAX_INPUT_LEN);
+	i = 0;
+	while (i < data->amount_of_input)
+	{
+		data->input_info[i][1] = (int)ft_strlen(data->input[i]);
+		i++;
+	}
 }
 
 /*
@@ -140,6 +147,7 @@ int	read_loop(struct termios orig_t, t_select *data)
 	int		check;
 
 	i = 0;
+	data->jump = 0;
 	get_window_size(data, 0);
 	set_start_values(data);
 	fill_output(data);
@@ -159,14 +167,14 @@ int	read_loop(struct termios orig_t, t_select *data)
 		// -> if amount of input is more than rows, we need to check if there's space
 		// for multiple columns
 		// -> check length of inputs
-		// --> data->input_info[n][0] has selection info 0 or 1
+		// --> data->input_info[n][0] has selection info 0 (not selected) or 1 (selected)
 		// --> data->input_info[n][1] has len info for the input
 		// --> data->input_info[n][1] has info how many rows we go down (amount of splits to rows)
 		if (get_window_size(data, 1) == -1)
 			fill_output(data);	
 		if (data->output)
 		{
-			write(STDOUT_FILENO, data->output, ft_strlen(data->output));
+			write(data->fd_out, data->output, ft_strlen(data->output));
 			ft_memdel((void *)&data->output);
 		}
 		check = reading(orig_t, data);
