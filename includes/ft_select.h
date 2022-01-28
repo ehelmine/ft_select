@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/27 13:08:50 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/28 12:21:08 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_select
 	int		window_columns;
 	int		cursor_x;
 	int		cursor_y;
-	int		jump;
+	int		col_lengths[1024];
 	char	*cursor_pos;
 	char	terminal_description[2048];
 	char	*buff_area;

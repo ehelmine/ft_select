@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/28 11:38:56 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/28 15:21:15 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,19 @@ void	fill_extra_cols(t_select *data, int i, int x)
 	int		y;
 	int		len;
 	char	*spaces;
-	int		z;
+	int		times;
+	int		tmp;
 
 	len = 0;
 	i += data->window_rows * (x + 1);
-	y = i - 1;
-	while (y >= data->window_rows * ((x - 1 + 1)))
+	times = 0;
+	tmp = i;
+	while (tmp >= data->window_rows)
 	{
-		if (data->input_info[y][1] > len)
-			len = data->input_info[y][1];
-		y--;
+		times++;
+		tmp -= data->window_rows;
 	}
-	z = i - data->window_rows;
-	y = len - data->input_info[z][1] + 3;
+	y = data->col_lengths[times - 1] - data->input_info[i - data->window_rows][1] + 3;
 	spaces = (char *)malloc(sizeof(char) * (y + 1));
 	len = 0;
 	while (len < y)
@@ -114,8 +114,10 @@ void	fill_output(t_select *data)
 {
 	int	i;
 	int	x;
+	int print;
 
 	i = 0;
+	print = 0;
 	if (data->output != NULL)
 		ft_memdel((void *)&data->output);
 	data->output_len = 0;

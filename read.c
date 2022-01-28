@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/27 13:14:37 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/28 15:33:29 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,29 +147,11 @@ int	read_loop(struct termios orig_t, t_select *data)
 	int		check;
 
 	i = 0;
-	data->jump = 0;
 	get_window_size(data, 0);
 	set_start_values(data);
 	fill_output(data);
 	while (1)
 	{
-		// add something after window size check (or inside there?)
-		// that does some checking if everything fits in to the terminal
-		// after resizing: compare window_cols to input lengths ->
-		// if one input is longer than window, it needs to go to next row partly
-		// and we need to maybe add to fill_output a variable (int change_row) that takes its
-		// value from data->input_info[n][1] -> it tells, how many rows we go down after
-		// that input sentence has been written out
-		// WHAT ABOUT
-		// we have wide terminal, but short in height -> we need to write first things to 
-		// first "columns", and then CONTINUE WRITING NEXT TO THEM? HOW?????
-		// -> compare amount_of_input to window_rows
-		// -> if amount of input is more than rows, we need to check if there's space
-		// for multiple columns
-		// -> check length of inputs
-		// --> data->input_info[n][0] has selection info 0 (not selected) or 1 (selected)
-		// --> data->input_info[n][1] has len info for the input
-		// --> data->input_info[n][1] has info how many rows we go down (amount of splits to rows)
 		if (get_window_size(data, 1) == -1)
 			fill_output(data);	
 		if (data->output)
