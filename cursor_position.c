@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:01:10 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/27 13:23:19 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/28 12:05:51 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	cursor_position(t_select *data)
 	char	*y;
 	char	*tmp;
 	int		i;
+	int		b_len;
+	int		total;
+	int		times;
 
 	if (data->cursor_pos != NULL)
 		ft_memdel((void *)&data->cursor_pos);
@@ -28,11 +31,25 @@ void	cursor_position(t_select *data)
 	tmp = NULL;
 	if (data->cursor_y > data->window_rows)
 	{
-		x = ft_itoa(2 + (int)ft_strlen(data->input[data->cursor_y - data->window_rows]) + 3 + 4);
 		i = data->cursor_y;
 		while (i > data->window_rows)
 			i -= data->window_rows;
 		y = ft_itoa(i);
+		total = 0;
+		times = 1;
+		while (i < data->cursor_y)
+		{
+			b_len = 0;
+			while (i < data->window_rows * times && i < data->cursor_y)
+			{
+				if (data->input_info[i][1] > b_len)
+					b_len = data->input_info[i][1];
+				i++;
+			}
+			total += b_len;
+			times++;
+		}
+		x = ft_itoa(2 + b_len + 3 + 4);
 	}
 	else
 	{

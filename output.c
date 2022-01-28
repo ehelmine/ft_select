@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/27 12:04:17 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/28 11:38:56 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,30 @@ static void	append_to_str(t_select *data, char *new)
 
 void	fill_extra_cols(t_select *data, int i, int x)
 {
+	int		y;
+	int		len;
+	char	*spaces;
+	int		z;
+
+	len = 0;
 	i += data->window_rows * (x + 1);
+	y = i - 1;
+	while (y >= data->window_rows * ((x - 1 + 1)))
+	{
+		if (data->input_info[y][1] > len)
+			len = data->input_info[y][1];
+		y--;
+	}
+	z = i - data->window_rows;
+	y = len - data->input_info[z][1] + 3;
+	spaces = (char *)malloc(sizeof(char) * (y + 1));
+	len = 0;
+	while (len < y)
+		spaces[len++] = ' ';
+	spaces[len] = '\0';
 	if (data->input[i][0] != '\0')
 	{
-		append_to_str(data, "   ");
+		append_to_str(data, spaces);
 		if (i == data->cursor_y - 1)
 			append_to_str(data, data->term_us_start_uline);
 		if (data->input_info[i][0] == 1)
@@ -84,6 +104,7 @@ void	fill_extra_cols(t_select *data, int i, int x)
 		if (data->input_info[i][0] == 1)
 			append_to_str(data, data->term_me_off_app);
 	}
+	ft_memdel((void *)&spaces);
 }
 
 // \x1b[?25l = hide cursor
