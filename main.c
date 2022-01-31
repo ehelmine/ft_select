@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/27 13:09:48 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:18:07 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_select *data_plus;
 
 /*
-** Write the arguments we just got as input to output.
-**
+** Write the arguments we got as input to data->input[][] array.
+** 
 */
 
 static void	args_to_struct(int argc, char **argv, t_select *data)

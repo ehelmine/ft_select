@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/28 12:21:08 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:26:30 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <curses.h>
 # include <fcntl.h>
 # include <term.h>
+# include <signal.h>
 # define MAX_INPUT_LEN 1024
 
 typedef struct s_select
@@ -34,7 +35,7 @@ typedef struct s_select
 	int		window_columns;
 	int		cursor_x;
 	int		cursor_y;
-	int		col_lengths[1024];
+	int		col_lengths[MAX_INPUT_LEN];
 	char	*cursor_pos;
 	char	terminal_description[2048];
 	char	*buff_area;
@@ -60,6 +61,8 @@ int				get_window_size(t_select *data, int when);
 int				get_terminal_info(t_select *data);
 
 int				get_terminal_capabilities(t_select *data);
+
+void			check_amount_of_output_cols(t_select *data, int i, int x);
 
 void			cursor_position(t_select *data);
 

@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/28 15:14:49 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:05:21 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_select *data_plus;
 
-static void	check_amount_of_output_cols(t_select *data, int i, int x)
+void	check_amount_of_output_cols(t_select *data, int i, int x)
 {
 	int	check;
 	int	len;
