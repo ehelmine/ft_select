@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/28 15:37:17 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:47:31 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 ** ISIG flag turn off = 
 */
 
-struct termios	enter_raw_mode(t_select *data)
+void	enter_raw_mode(t_select *data)
 {
 	struct termios	orig_t;
 	struct termios	raw_t;
@@ -69,5 +69,6 @@ struct termios	enter_raw_mode(t_select *data)
 		write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
 		exit (1);
 	}
-	return (orig_t);
+	data->d_orig_t = orig_t;
+	return ;
 }

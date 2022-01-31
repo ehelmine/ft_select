@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/31 15:26:30 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/01/31 16:42:12 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_select
 	int		output_len;
 	char	*output;
 	int		i;
+	int		stop;
+	struct termios d_orig_t;
 }				t_select;
 
 extern t_select *data_plus;
@@ -68,7 +70,7 @@ void			cursor_position(t_select *data);
 
 int				read_loop(struct termios orig_t, t_select *data);
 
-struct termios	enter_raw_mode(t_select *data);
+void			enter_raw_mode(t_select *data);
 void			stop_raw_mode(struct termios orig_t, t_select *data);
 
 void			delete_option(t_select *data, struct termios orig_t);
