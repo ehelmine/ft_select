@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 15:16:54 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:45:22 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,6 @@ static void	args_to_struct(int argc, char **argv, t_select *data)
 	}
 	data->input[x][0] = '\0';
 	data->amount_of_input = x;
-}
-
-void	handle_signals(int signal_num)
-{
-	if (signal_num == SIGTSTP)
-	{
-		stop_raw_mode(g_plus->d_orig_t, g_plus);
-		g_plus->stop = 1;
-	}
-	if (signal_num == SIGCONT)
-	{
-		if (g_plus->stop == 1)
-		{
-			enter_raw_mode(g_plus);
-		}
-	}
 }
 
 int	main(int argc, char **argv)

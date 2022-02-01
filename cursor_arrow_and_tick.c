@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:01:10 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 14:39:59 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:43:50 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	arrow_move_or_tick_box(t_select *data, char letter)
 	}
 }
 
-static void	more_input_than_input_rows(t_select *data, char **x, char **y)
+static void	more_input_than_window_rows(t_select *data, char **x, char **y)
 {
 	int	times;
 	int	i;
@@ -79,7 +79,7 @@ void	cursor_position(t_select *data)
 	y = NULL;
 	tmp = NULL;
 	if (data->cursor_y > data->window_rows)
-		more_input_than_input_rows(data, &x, &y);
+		more_input_than_window_rows(data, &x, &y);
 	else
 	{
 		x = ft_itoa(data->cursor_x);

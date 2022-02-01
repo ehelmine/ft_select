@@ -6,14 +6,14 @@
 #    By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 12:59:07 by ehelmine          #+#    #+#              #
-#    Updated: 2022/02/01 14:16:08 by ehelmine         ###   ########.fr        #
+#    Updated: 2022/02/01 15:46:30 by ehelmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_select
 
-SRCS = main.c raw_mode.c read.c get_info.c error.c cursor_position.c \
-	delete_line.c output.c print_options.c
+SRCS = main.c raw_mode.c read.c get_info.c error.c cursor_arrow_and_tick.c \
+	delete_line.c output.c print_options.c signals.c
 
 OBJS_DIR = objs
 

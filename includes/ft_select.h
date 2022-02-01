@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 15:16:27 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:45:40 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_select
 	char			*cursor_pos;
 	char			terminal_description[2048];
 	char			*buff_area;
-	char			*term_cm_position;
 	char			*term_cl_clear_screen;
 	char			*term_us_start_uline;
 	char			*term_ue_stop_uline;
@@ -53,6 +52,8 @@ typedef struct s_select
 }				t_select;
 
 void			output_error(int i);
+
+void			handle_signals(int signal_num);
 
 void			enter_raw_mode(t_select *data);
 void			stop_raw_mode(struct termios orig_t, t_select *data);
