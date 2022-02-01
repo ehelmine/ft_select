@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 14:53:15 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:15:50 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	get_rest_of_col_lengths(t_select *data, int biggest_len_f, int i,
 		if (biggest_len_f + 3 + biggest_len_s > data->window_columns)
 		{
 			data->output_cols--;
-			break ;
+			return ;
 		}
 		else
 			biggest_len_f = biggest_len_s;

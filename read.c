@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 14:39:52 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:14:01 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static int	read_escape_character(t_select *data, struct termios orig_t)
 		if (read(STDIN_FILENO, &buf[2], 1) != 1)
 			return (-1);
 		if (buf[2] == '~')
+		{
 			delete_option(data, orig_t);
+			get_window_size(data, 1);
+		}
 	}
 	else
 		return (1);
@@ -54,6 +57,7 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	else if (c == 127)
 	{
 		delete_option(data, orig_t);
+		get_window_size(data, 1);
 		fill_output(data);
 	}
 	else if (c == ' ')
@@ -117,8 +121,8 @@ int	read_loop(struct termios orig_t, t_select *data)
 	int		check;
 
 	i = 0;
-	get_window_size(data, 0);
 	set_start_values(data);
+	get_window_size(data, 0);
 	fill_output(data);
 	while (1)
 	{

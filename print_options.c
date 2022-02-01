@@ -6,11 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:15:41 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 14:16:00 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:57:38 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+extern t_select	*g_plus;
 
 void	write_options(t_select *data, struct termios orig_t)
 {
