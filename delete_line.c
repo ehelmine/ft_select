@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 11:36:18 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 13:53:41 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:27:51 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void	delete_option(t_select *data, struct termios orig_t)
 			ft_memdel((void *)&data->output);
 		exit (0);
 	}
+	get_window_size(data, 1);
 }

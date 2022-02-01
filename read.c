@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 15:14:01 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 15:31:29 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,8 @@ static int	read_escape_character(t_select *data, struct termios orig_t)
 		if (read(STDIN_FILENO, &buf[2], 1) != 1)
 			return (-1);
 		if (buf[2] == '~')
-		{
 			delete_option(data, orig_t);
-			get_window_size(data, 1);
-		}
 	}
-	else
-		return (1);
-	fill_output(data);
 	return (1);
 }
 
@@ -55,18 +49,12 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	else if (c == 13)
 		write_options(data, orig_t);
 	else if (c == 127)
-	{
 		delete_option(data, orig_t);
-		get_window_size(data, 1);
-		fill_output(data);
-	}
 	else if (c == ' ')
-	{
 		arrow_move_or_tick_box(data, ' ');
-		fill_output(data);
-	}
 	else
-		return (0);
+		return (1);
+	fill_output(data);
 	return (1);
 }
 
@@ -83,6 +71,17 @@ static int	reading(struct termios orig_t, t_select *data)
 		return (1);
 	return (-1);
 }
+
+/*
+** data->input_info has info about that specific line for example
+** data->input_info[0] has all info about first arg:
+** [0][0] if that has been ticked (1) or not (0) in the list 
+** [0][1] length of that line
+**
+** here we determine first cursor position to be x=2 and y=1 which means
+** cursor is going to point to first row, second position which is 
+** gonna be in the first line's tick box.
+*/
 
 static void	set_start_values(t_select *data)
 {
