@@ -6,13 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:30:24 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/27 10:10:53 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:59:13 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-extern t_select *data_plus;
+extern t_select	*g_plus;
 
 void	output_error(int i)
 {
@@ -27,5 +27,5 @@ void	output_error(int i)
 		write(STDOUT_FILENO, "Some difficulty accessing the data base.\n", 41);
 	else if (i == 3)
 		write(STDOUT_FILENO, "This terminal type is not defined.\n", 35);
-	exit (1);
+	exit (-1);
 }

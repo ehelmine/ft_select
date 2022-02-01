@@ -6,42 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/31 15:07:32 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:39:52 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-extern t_select *data_plus;
-
-void	arrow_move_or_tick_box(t_select *data, char letter)
-{
-	if (letter == 'A')
-	{
-		if (data->cursor_y == 1)
-			data->cursor_y = data->amount_of_input;
-		else
-			data->cursor_y--;
-	}
-	else if (letter == 'B')
-	{
-		if (data->cursor_y == data->amount_of_input)
-			data->cursor_y = 1;
-		else
-			data->cursor_y++;
-	}
-	else if (letter == ' ')
-	{
-		if (data->input_info[data->cursor_y - 1][0] == 0)
-			data->input_info[data->cursor_y - 1][0] = 1;
-		else
-			data->input_info[data->cursor_y - 1][0] = 0;
-		if (data->cursor_y == data->amount_of_input)
-			data->cursor_y = 1;
-		else
-			data->cursor_y++;
-	}
-}
+extern t_select	*g_plus;
 
 static int	read_escape_character(t_select *data, struct termios orig_t)
 {

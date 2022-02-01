@@ -6,13 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 11:36:18 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/27 10:18:58 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:53:41 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-extern t_select *data_plus;
+extern t_select	*g_plus;
 
 void	move_lines_one_up(t_select *data)
 {

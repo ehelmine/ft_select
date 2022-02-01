@@ -6,13 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/31 16:47:31 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:38:37 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-extern t_select *data_plus;
+extern t_select	*g_plus;
 
 void	stop_raw_mode(struct termios orig_t, t_select *data)
 {

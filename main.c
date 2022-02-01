@@ -6,13 +6,13 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/31 16:46:40 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 13:59:58 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-t_select *data_plus;
+t_select	*g_plus;
 
 /*
 ** Write the arguments we got as input to data->input[][] array.
@@ -40,14 +40,14 @@ void	handle_signals(int signal_num)
 {
 	if (signal_num == SIGTSTP)
 	{
-		stop_raw_mode(data_plus->d_orig_t, data_plus);
-		data_plus->stop = 1;
+		stop_raw_mode(g_plus->d_orig_t, g_plus);
+		g_plus->stop = 1;
 	}
 	if (signal_num == SIGCONT)
 	{
-		if (data_plus->stop == 1)
+		if (g_plus->stop == 1)
 		{
-			enter_raw_mode(data_plus);
+			enter_raw_mode(g_plus);
 		}
 	}
 }
@@ -64,13 +64,11 @@ int	main(int argc, char **argv)
 	else
 	{
 		ft_memset(&data, 0, sizeof(t_select));
-		data_plus = &data;
+		g_plus = &data;
 		args_to_struct(argc, argv, &data);
-		if (get_terminal_info(&data) != -1)
-		{
-			enter_raw_mode(&data);
-			read_loop(data.d_orig_t, &data);
-		}
+		get_terminal_info(&data);
+		enter_raw_mode(&data);
+		read_loop(data.d_orig_t, &data);
 	}
 	return (0);
 }

@@ -6,22 +6,72 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:01:10 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/28 15:31:51 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:39:59 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-extern t_select *data_plus;
+extern t_select	*g_plus;
+
+void	arrow_move_or_tick_box(t_select *data, char letter)
+{
+	if (letter == 'A')
+	{
+		if (data->cursor_y == 1)
+			data->cursor_y = data->amount_of_input;
+		else
+			data->cursor_y--;
+	}
+	else if (letter == 'B')
+	{
+		if (data->cursor_y == data->amount_of_input)
+			data->cursor_y = 1;
+		else
+			data->cursor_y++;
+	}
+	else if (letter == ' ')
+	{
+		if (data->input_info[data->cursor_y - 1][0] == 0)
+			data->input_info[data->cursor_y - 1][0] = 1;
+		else
+			data->input_info[data->cursor_y - 1][0] = 0;
+		if (data->cursor_y == data->amount_of_input)
+			data->cursor_y = 1;
+		else
+			data->cursor_y++;
+	}
+}
+
+static void	more_input_than_input_rows(t_select *data, char **x, char **y)
+{
+	int	times;
+	int	i;
+	int	total;
+
+	times = 0;
+	i = data->cursor_y;
+	while (i > data->window_rows)
+	{
+		times++;
+		i -= data->window_rows;
+	}
+	*y = ft_itoa(i);
+	i = 0;
+	total = (times * 7);
+	while (times > 0)
+	{
+		total += data->col_lengths[i++];
+		times--;
+	}
+	*x = ft_itoa(total + 2);
+}
 
 void	cursor_position(t_select *data)
 {
 	char	*x;
 	char	*y;
 	char	*tmp;
-	int		i;
-	int		total;
-	int		times;
 
 	if (data->cursor_pos != NULL)
 		ft_memdel((void *)&data->cursor_pos);
@@ -29,24 +79,7 @@ void	cursor_position(t_select *data)
 	y = NULL;
 	tmp = NULL;
 	if (data->cursor_y > data->window_rows)
-	{
-		times = 0;
-		i = data->cursor_y;
-		while (i > data->window_rows)
-		{
-			times++;
-			i -= data->window_rows;
-		}
-		y = ft_itoa(i);
-		i = 0;
-		total = (times * 7);
-		while (times > 0)
-		{
-			total += data->col_lengths[i++];
-			times--;
-		}
-		x = ft_itoa(total + 2);
-	}
+		more_input_than_input_rows(data, &x, &y);
 	else
 	{
 		x = ft_itoa(data->cursor_x);
@@ -54,11 +87,9 @@ void	cursor_position(t_select *data)
 	}
 	if (x != NULL && y != NULL)
 	{
-		tmp = ft_strjoin("\x1b[", y);
-		ft_memdel((void *)&y);
-		y = ft_strjoin(tmp, ";");
+		tmp = ft_strjoin_three("\x1b[", y, ";");
+		data->cursor_pos = ft_strjoin_three(tmp, x, "H");
 		ft_memdel((void *)&tmp);
-		data->cursor_pos = ft_strjoin_three(y, x, "H");
 	}
 	else
 		data->cursor_pos = ft_strdup("");

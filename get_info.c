@@ -6,44 +6,27 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/31 15:05:21 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/01 14:53:15 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-extern t_select *data_plus;
-
-void	check_amount_of_output_cols(t_select *data, int i, int x)
+static void	get_rest_of_col_lengths(t_select *data, int biggest_len_f, int i,
+	int x)
 {
 	int	check;
-	int	len;
-	int	biggest_len_f;
 	int	biggest_len_s;
 
 	check = 1;
-	while (data->amount_of_input - (data->window_rows * check) > 0)
-		check++;
-	data->output_cols = check;
-	check = 1;
-	biggest_len_f = 0;
 	biggest_len_s = 0;
-	while (data->input[i][0] != '\0' && i < data->window_rows * check)
-	{
-		len = ft_strlen(data->input[i]);
-		if (len > biggest_len_f)
-			biggest_len_f = len;
-		i++;
-	}
-	data->col_lengths[x++] = biggest_len_f;
 	while (check <= data->output_cols)
 	{
 		check++;
 		while (data->input[i][0] != '\0' && i < data->window_rows * check)
 		{
-			len = ft_strlen(data->input[i]);
-			if (len > biggest_len_s)
-				biggest_len_s = len;
+			if (data->input_info[i][1] > biggest_len_s)
+				biggest_len_s = data->input_info[i][1];
 			i++;
 		}
 		data->col_lengths[x++] = biggest_len_s;
@@ -55,6 +38,27 @@ void	check_amount_of_output_cols(t_select *data, int i, int x)
 		else
 			biggest_len_f = biggest_len_s;
 	}
+}
+
+void	check_amount_of_output_cols(t_select *data, int i, int x)
+{
+	int	check;
+	int	biggest_len_f;
+
+	check = 1;
+	while (data->amount_of_input - (data->window_rows * check) > 0)
+		check++;
+	data->output_cols = check;
+	check = 1;
+	biggest_len_f = 0;
+	while (data->input[i][0] != '\0' && i < data->window_rows * check)
+	{
+		if (data->input_info[i][1] > biggest_len_f)
+			biggest_len_f = data->input_info[i][1];
+		i++;
+	}
+	data->col_lengths[x++] = biggest_len_f;
+	get_rest_of_col_lengths(data, biggest_len_f, i, x);
 }
 
 /*
@@ -80,14 +84,11 @@ int	get_window_size(t_select *data, int when)
 		data->window_columns = window.ws_col;
 		check_amount_of_output_cols(data, 0, 0);
 		return (1);
-		//ft_printf("lines %i columns %i\r\n", window.ws_row, window.ws_col);
 	}
 	data->window_rows = 25;
 	data->window_columns = 50;
 	check_amount_of_output_cols(data, 0, 0);
 	return (1);
-	// add here the window size checking with the hard way
-	// kind of looping through the window with esc sequence commands
 }
 
 /*
@@ -151,10 +152,10 @@ int	get_terminal_capabilities(t_select *data)
 ** the specified type is not defined in it, and some other value otherwise.
 */
 
-int	get_terminal_info(t_select *data)
+void	get_terminal_info(t_select *data)
 {
 	int	check;
-	
+
 	data->fd_out = 1;
 	if (isatty(1) == 0)
 		data->fd_out = open(ttyname(ttyslot()), O_WRONLY);
@@ -170,5 +171,5 @@ int	get_terminal_info(t_select *data)
 	else if (check == 0)
 		output_error(3);
 	get_terminal_capabilities(data);
-	return (1);
+	return ;
 }
