@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/02 17:45:26 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:17:03 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	enter_raw_mode(t_select *data)
 		write(STDOUT_FILENO, "error with tcgetattr\n", 21);
 		exit (1);
 	}
-	raw_t.c_iflag &= ~(ICRNL | IXON);
+	raw_t.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
 	raw_t.c_oflag &= ~(OPOST);
 	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw_t.c_cc[VMIN] = 0;

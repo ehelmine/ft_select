@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/02 17:32:48 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/02 19:19:21 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_tstp(int signal_num)
 		}
 		signal(SIGTSTP, SIG_DFL);
 		ioctl(STDERR_FILENO, TIOCSTI, "\x1A");
-		tputs(g_plus->term_cl_clear_screen, g_plus->window_rows - 1, &f_putc);
+		tputs(g_plus->term_cl_clear_screen, g_plus->window_rows, &f_putc);
 	}
 }
 
@@ -44,9 +44,8 @@ void	handle_cont(int signal_num)
 				write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
 				exit (1);
 			}
-		//	tputs(g_plus->term_cl_clear_screen, g_plus->window_rows - 1, &f_putc);
-			if (get_window_size(g_plus, 1) == -1)
-				fill_output(g_plus);
+			get_window_size(g_plus, 1);
+			fill_output(g_plus);
 			if (g_plus->output)
 				write(g_plus->fd_out, g_plus->output, ft_strlen(g_plus->output));
 		}
