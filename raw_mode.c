@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 14:38:37 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:31:34 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,13 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 ** terminal waits for another character input and in mac terminal driver is
 ** set to discard Ctrl-O.
 **
-** ISIG flag turn off = 
+*/
+
+/*
+info->termios->c_lflag &= ~(ECHO | ICANON | IEXTEN);
+info->termios->c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ICRNL);
+info->termios->c_oflag &= ~(OPOST);
+info->termios->c_cflag |= (CS8);
 */
 
 void	enter_raw_mode(t_select *data)
@@ -52,15 +58,14 @@ void	enter_raw_mode(t_select *data)
 	struct termios	orig_t;
 	struct termios	raw_t;
 
-	if (tcgetattr(STDIN_FILENO, &orig_t) == -1)
+	if (tcgetattr(STDIN_FILENO, &orig_t) == -1 || tcgetattr(STDIN_FILENO, &raw_t) == -1)
 	{
 		write(STDOUT_FILENO, "error with tcgetattr\n", 21);
 		exit (1);
 	}
-	raw_t = orig_t;
 	raw_t.c_iflag &= ~(ICRNL | IXON);
 	raw_t.c_oflag &= ~(OPOST);
-	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw_t.c_cc[VMIN] = 0;
 	raw_t.c_cc[VTIME] = 1;
 	if (tcsetattr(data->fd_out, TCSAFLUSH, &raw_t) == -1)
@@ -70,5 +75,6 @@ void	enter_raw_mode(t_select *data)
 		exit (1);
 	}
 	data->d_orig_t = orig_t;
+	data->d_raw_t = raw_t;
 	return ;
 }

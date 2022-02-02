@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 15:45:22 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:10:02 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,20 @@ static void	args_to_struct(int argc, char **argv, t_select *data)
 
 int	main(int argc, char **argv)
 {
-	int				signal_num;
-	t_select		data;
+	t_select	data;
+	int			signal_num;
 
 	signal_num = 0;
-	signal(signal_num, handle_signals);
 	if (argc < 2)
 		write(1, "usage: ./ft_select <arg1> .. <argN>\n", 36);
 	else
 	{
 		ft_memset(&data, 0, sizeof(t_select));
 		g_plus = &data;
+		signal(signal_num, handle_signals);
 		args_to_struct(argc, argv, &data);
 		get_terminal_info(&data);
+		get_terminal_capabilities(&data);
 		enter_raw_mode(&data);
 		read_loop(data.d_orig_t, &data);
 	}

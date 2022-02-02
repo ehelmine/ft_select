@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 15:36:14 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/02 13:09:56 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,5 @@ void	get_terminal_info(t_select *data)
 		output_error(2);
 	else if (check == 0)
 		output_error(3);
-	get_terminal_capabilities(data);
 	return ;
 }
