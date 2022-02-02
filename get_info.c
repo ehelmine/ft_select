@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/02 13:09:56 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:13:46 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int	get_window_size(t_select *data, int when)
 
 int	get_terminal_capabilities(t_select *data)
 {
+	if (data->buff_area != NULL)
+		ft_memdel((void *)&data->buff_area);
 	data->buff_area = (char *)malloc(sizeof(char) * 2048);
 	data->term_cl_clear_screen = tgetstr("cl", &data->buff_area);
 	data->term_us_start_uline = tgetstr("us", &data->buff_area);
@@ -157,10 +159,20 @@ void	get_terminal_info(t_select *data)
 
 	data->fd_out = 1;
 	if (isatty(1) == 0)
-		data->fd_out = open(ttyname(ttyslot()), O_WRONLY);
+	{
+		check = open(ttyname(ttyslot()), O_WRONLY);
+		if (check >= 0)
+			data->fd_out = check;
+	}
 	data->fd_in = 0;
 	if (isatty(0) == 0)
-		data->fd_in = open(ttyname(ttyslot()), O_RDONLY);
+	{
+		check = open(ttyname(ttyslot()), O_RDONLY);
+		if (check >= 0)
+			data->fd_in = check;
+	}
+	if (data->stop)
+		return ;
 	data->terminal_envname = getenv("TERM");
 	if (data->terminal_envname == NULL)
 		output_error(1);

@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 15:31:29 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/02 17:24:09 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,7 @@ int	read_loop(struct termios orig_t, t_select *data)
 		if (get_window_size(data, 1) == -1)
 			fill_output(data);
 		if (data->output)
-		{
 			write(data->fd_out, data->output, ft_strlen(data->output));
-			ft_memdel((void *)&data->output);
-		}
 		check = reading(orig_t, data);
 		if (check == -1)
 			break ;
