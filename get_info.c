@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/02 17:13:46 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:15:38 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ static void	get_rest_of_col_lengths(t_select *data, int biggest_len_f, int i,
 			i++;
 		}
 		data->col_lengths[x++] = biggest_len_s;
-		if (biggest_len_f + 3 + biggest_len_s > data->window_columns)
+		if (4 + biggest_len_f + 3 + 4 + biggest_len_s > data->window_columns)
 		{
+			data->col_lengths[x - 1] = 0;
 			data->output_cols--;
 			return ;
 		}
@@ -171,7 +172,7 @@ void	get_terminal_info(t_select *data)
 		if (check >= 0)
 			data->fd_in = check;
 	}
-	if (data->stop)
+	if (data->raw)
 		return ;
 	data->terminal_envname = getenv("TERM");
 	if (data->terminal_envname == NULL)

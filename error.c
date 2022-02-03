@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:30:24 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 13:59:13 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:43:28 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ extern t_select	*g_plus;
 
 void	output_error(int i)
 {
-	if (i == 0)
-	{
-		write(STDOUT_FILENO, "The fd argument is not a valid file \
-		descriptor or the file associated with fd is not a terminal.\n", 100);
-	}
-	else if (i == 1)
+	stop_raw_mode(g_plus->d_orig_t, g_plus);
+	if (i == 1)
 		write(STDOUT_FILENO, "Environment variable TERM was not found.\n", 41);
 	else if (i == 2)
 		write(STDOUT_FILENO, "Some difficulty accessing the data base.\n", 41);

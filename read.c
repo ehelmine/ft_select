@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/02 17:24:09 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:19:51 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ static void	set_start_values(t_select *data)
 	data->output = NULL;
 	data->cursor_x = 2;
 	data->cursor_y = 1;
+	data->extra_y = 0;
 	while (i < MAX_INPUT_LEN)
 		ft_memset(data->input_info[i++], 0, MAX_INPUT_LEN);
 	i = 0;

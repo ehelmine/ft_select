@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/02 17:31:36 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 12:22:41 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ typedef struct s_select
 	int				output_len;
 	char			*output;
 	int				i;
-	int				stop;
+	int				raw;
+	int				extra_y;
 	struct termios	d_orig_t;
 	struct termios	d_raw_t;
 }				t_select;

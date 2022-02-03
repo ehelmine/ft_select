@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/02 19:17:03 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:44:57 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@ extern t_select	*g_plus;
 
 void	stop_raw_mode(struct termios orig_t, t_select *data)
 {
-	if (tcsetattr(data->fd_out, TCSAFLUSH, &orig_t) == -1)
+	if (data->raw)
 	{
-		write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
-		exit (1);
+		if (tcsetattr(data->fd_out, TCSAFLUSH, &orig_t) == -1)
+		{
+			write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
+			exit (1);
+		}
 	}
 }
 
@@ -74,6 +77,7 @@ void	enter_raw_mode(t_select *data)
 		write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
 		exit (1);
 	}
+	data->raw = 1;
 	data->d_orig_t = orig_t;
 	data->d_raw_t = raw_t;
 	return ;
