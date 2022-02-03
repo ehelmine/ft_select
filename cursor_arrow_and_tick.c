@@ -6,13 +6,11 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:01:10 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 16:23:39 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:44:31 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
-
-extern t_select	*g_plus;
 
 void	arrow_move_or_tick_box(t_select *data, char letter)
 {

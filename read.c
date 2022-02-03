@@ -6,13 +6,11 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 16:24:16 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:45:06 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
-
-extern t_select	*g_plus;
 
 static int	read_escape_character(t_select *data, struct termios orig_t)
 {

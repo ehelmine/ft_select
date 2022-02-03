@@ -6,13 +6,11 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 16:24:07 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:44:47 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
-
-extern t_select	*g_plus;
 
 static void	append_to_str(t_select *data, char *new)
 {

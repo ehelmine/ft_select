@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 16:23:57 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:41:56 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,11 +172,11 @@ void	get_terminal_info(t_select *data, int check)
 		return ;
 	data->terminal_envname = getenv("TERM");
 	if (data->terminal_envname == NULL)
-		output_error(1);
+		output_error(data, 1);
 	check = tgetent(data->terminal_description, data->terminal_envname);
 	if (check == -1)
-		output_error(2);
+		output_error(data, 2);
 	else if (check == 0)
-		output_error(3);
+		output_error(data, 3);
 	return ;
 }

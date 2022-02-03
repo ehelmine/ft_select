@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 16:39:31 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:45:21 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,9 @@ typedef struct s_select
 	struct termios	d_raw_t;
 }				t_select;
 
-extern t_select	*g_plus;
+void			output_error(t_select *data, int i);
 
-void			output_error(int i);
-
-void			handle_tstp(int signal_num);
-void			handle_cont(int signal_num);
-void			handle_winch(int signal_num);
-void			handle_quit(int signal_num);
+void			check_signals(void);
 
 void			enter_raw_mode(t_select *data);
 void			stop_raw_mode(struct termios orig_t, t_select *data);

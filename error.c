@@ -6,17 +6,15 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:30:24 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:27:06 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:42:26 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
-extern t_select	*g_plus;
-
-void	output_error(int i)
+void	output_error(t_select *data, int i)
 {
-	stop_raw_mode(g_plus->d_orig_t, g_plus);
+	stop_raw_mode(data->d_orig_t, data);
 	if (i == 1)
 		write(STDOUT_FILENO, "Environment variable TERM was not found.\n", 41);
 	else if (i == 2)
