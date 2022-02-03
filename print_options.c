@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:15:41 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/01 14:57:38 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:27:44 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	write_options(t_select *data, struct termios orig_t)
 	i = 0;
 	first = 0;
 	tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
-	if (data->output != NULL)
-		ft_memdel((void *)&data->output);
+	ft_memdel((void *)&data->output);
 	stop_raw_mode(orig_t, data);
 	while (data->input[i][0] != '\0')
 	{
@@ -37,7 +36,7 @@ void	write_options(t_select *data, struct termios orig_t)
 		i++;
 	}
 	write(STDOUT_FILENO, "\n", 1);
-	exit (0);
+	exit (EXIT_SUCCESS);
 }
 
 int	f_putc(int c)

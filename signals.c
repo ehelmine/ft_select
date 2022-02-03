@@ -6,13 +6,42 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 13:29:32 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:28:25 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
 
 extern t_select	*g_plus;
+
+/*void	handle_other_signals(int signal_num)
+{
+	
+}*/
+
+void	handle_winch(int signal_num)
+{
+	if (signal_num)
+	{
+		get_window_size(g_plus, 1);
+		fill_output(g_plus);
+	}
+}
+
+void	handle_quit(int signal_num)
+{
+	if (signal_num)
+	{
+		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_orig_t) == -1)
+		{
+			write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
+			exit (EXIT_FAILURE);
+		}
+		ft_memdel((void *)&g_plus->output);
+		tputs(g_plus->term_cl_clear_screen, g_plus->window_rows - 1, &f_putc);	
+		exit(EXIT_SUCCESS);
+	}
+}
 
 void	handle_tstp(int signal_num)
 {
@@ -21,7 +50,7 @@ void	handle_tstp(int signal_num)
 		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_orig_t) == -1)
 		{
 			write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
-			exit (1);
+			exit (EXIT_FAILURE);
 		}
 		g_plus->raw = 0;
 		signal(SIGTSTP, SIG_DFL);
@@ -40,7 +69,7 @@ void	handle_cont(int signal_num)
 		{
 			stop_raw_mode(g_plus->d_orig_t, g_plus);
 			write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
-			exit (1);
+			exit (EXIT_FAILURE);
 		}
 		signal(SIGTSTP, handle_tstp);
 		get_window_size(g_plus, 1);

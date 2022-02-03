@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:01:10 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 13:24:55 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:23:39 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ void	cursor_position(t_select *data)
 	char	*y;
 	char	*tmp;
 
-	if (data->cursor_pos != NULL)
-		ft_memdel((void *)&data->cursor_pos);
+	ft_memdel((void *)&data->cursor_pos);
 	x = NULL;
 	y = NULL;
 	tmp = NULL;

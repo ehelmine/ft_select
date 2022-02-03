@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 13:27:07 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:24:07 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ void	fill_output(t_select *data)
 
 	i = 0;
 	print = 0;
-	if (data->output != NULL)
-		ft_memdel((void *)&data->output);
+	ft_memdel((void *)&data->output);
 	data->output_len = 0;
 	append_to_str(data, data->term_cl_clear_screen);
 	while (i < data->amount_of_input)

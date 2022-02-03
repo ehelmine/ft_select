@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 13:17:33 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/08/05 17:32:16 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:29:00 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	s2len = ft_strlen(s2);
 	nwstr = (char *)malloc(sizeof(char) * (s1len + s2len + 1));
 	if (nwstr == NULL)
-		exit (1);
+		exit (EXIT_FAILURE);
 	i = 0;
 	while (s1[i] != '\0')
 	{

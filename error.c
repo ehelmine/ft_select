@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:30:24 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 11:43:28 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:27:06 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ void	output_error(int i)
 		write(STDOUT_FILENO, "Some difficulty accessing the data base.\n", 41);
 	else if (i == 3)
 		write(STDOUT_FILENO, "This terminal type is not defined.\n", 35);
-	exit (-1);
+	exit (EXIT_FAILURE);
 }

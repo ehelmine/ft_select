@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 12:13:22 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:27:35 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:28:39 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ char	**ft_arrnew(size_t rows, size_t first_row_len)
 
 	array = (char **)malloc(sizeof(char *) * (rows + 1));
 	if (array == NULL)
-		exit (1);
+		exit (EXIT_FAILURE);
 	array[0] = (char *)malloc(sizeof(char) * (first_row_len + 1));
 	if (array[0] == NULL)
-		exit(1);
+		exit(EXIT_FAILURE);
 	return (array);
 }

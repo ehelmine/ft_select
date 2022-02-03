@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 16:49:30 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/08/26 12:15:24 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:29:09 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strnew(size_t size)
 
 	newstr = (char *)malloc(sizeof(char) * (size + 1));
 	if (newstr == NULL)
-		exit (1);
+		exit (EXIT_FAILURE);
 	else
 	{
 		ft_memset(newstr, 0, size + 1);

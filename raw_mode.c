@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 13:30:03 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:28:01 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,26 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 		if (tcsetattr(data->fd_out, TCSAFLUSH, &orig_t) == -1)
 		{
 			write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
-			exit (1);
+			exit (EXIT_FAILURE);
 		}
 	}
 }
 
 /*
+**
+** BRKINT flag turn off =
+**
+**
 ** ICRNL flag turn off = stops terminal translating any carriage return
 ** (13, '\r') that are gotten as input from user into newlines (10, '\n')
 ** When flag is on, Ctrl-M is read as 10 (we expect it to be 13 (13th letter
 ** of the alphabet)), also Ctrl-J already is 10. Also enter key is 10.
 ** After turning off the flag: Ctrl-M is 13 (carriage return) and
 ** also enter key is 13.
+**
+** INPCK flag turn off =
+**
+** ISTRIP flag turn off =
 **
 ** IXON flag turn off = 
 **
@@ -47,13 +55,6 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 **
 */
 
-/*
-info->termios->c_lflag &= ~(ECHO | ICANON | IEXTEN);
-info->termios->c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ICRNL);
-info->termios->c_oflag &= ~(OPOST);
-info->termios->c_cflag |= (CS8);
-*/
-
 void	enter_raw_mode(t_select *data)
 {
 	struct termios	orig_t;
@@ -63,7 +64,7 @@ void	enter_raw_mode(t_select *data)
 		|| tcgetattr(STDIN_FILENO, &raw_t) == -1)
 	{
 		write(STDOUT_FILENO, "error with tcgetattr\n", 21);
-		exit (1);
+		exit (EXIT_FAILURE);
 	}
 	raw_t.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
 	raw_t.c_oflag &= ~(OPOST);
@@ -74,7 +75,7 @@ void	enter_raw_mode(t_select *data)
 	{
 		stop_raw_mode(orig_t, data);
 		write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
-		exit (1);
+		exit (EXIT_FAILURE);
 	}
 	data->raw = 1;
 	data->d_orig_t = orig_t;

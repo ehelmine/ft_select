@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 13:19:51 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:24:16 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int	read_loop(struct termios orig_t, t_select *data)
 		if (check == -1)
 			break ;
 	}
-	if (data->output != NULL)
-		ft_memdel((void *)&data->output);
+	ft_memdel((void *)&data->output);
 	return (1);
 }

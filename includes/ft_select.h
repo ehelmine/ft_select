@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 13:29:36 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 16:39:31 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void			output_error(int i);
 
 void			handle_tstp(int signal_num);
 void			handle_cont(int signal_num);
+void			handle_winch(int signal_num);
+void			handle_quit(int signal_num);
 
 void			enter_raw_mode(t_select *data);
 void			stop_raw_mode(struct termios orig_t, t_select *data);

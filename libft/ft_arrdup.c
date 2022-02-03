@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 19:02:36 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/01/14 15:26:00 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:28:33 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ char	**ft_arrdup(char **arr)
 		rows++;
 	copy_of_arr = (char **)malloc(sizeof(char *) * (rows + 1));
 	if (copy_of_arr == NULL)
-		exit (1);
+		exit (EXIT_FAILURE);
 	i = 0;
 	while (arr[i] != NULL)
 	{
 		copy_of_arr[i] = ft_strdup(arr[i]);
 		if (copy_of_arr[i] == NULL)
-			exit (1);
+			exit (EXIT_FAILURE);
 		ft_memdel((void *)&arr[i++]);
 	}
 	free(arr);
