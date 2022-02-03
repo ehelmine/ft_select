@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 12:22:41 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:29:36 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			enter_raw_mode(t_select *data);
 void			stop_raw_mode(struct termios orig_t, t_select *data);
 
 int				get_window_size(t_select *data, int when);
-void			get_terminal_info(t_select *data);
+void			get_terminal_info(t_select *data, int check);
 int				get_terminal_capabilities(t_select *data);
 void			check_amount_of_output_cols(t_select *data, int i, int x);
 void			cursor_position(t_select *data);

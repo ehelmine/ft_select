@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 11:51:13 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:29:26 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int argc, char **argv)
 		g_plus = &data;
 		check_signals();
 		args_to_struct(argc, argv, &data);
-		get_terminal_info(&data);
+		get_terminal_info(&data, 0);
 		get_terminal_capabilities(&data);
 		enter_raw_mode(&data);
 		read_loop(data.d_orig_t, &data);

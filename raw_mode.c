@@ -6,13 +6,11 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 11:44:57 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:30:03 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
-
-extern t_select	*g_plus;
 
 void	stop_raw_mode(struct termios orig_t, t_select *data)
 {
@@ -61,7 +59,8 @@ void	enter_raw_mode(t_select *data)
 	struct termios	orig_t;
 	struct termios	raw_t;
 
-	if (tcgetattr(STDIN_FILENO, &orig_t) == -1 || tcgetattr(STDIN_FILENO, &raw_t) == -1)
+	if (tcgetattr(STDIN_FILENO, &orig_t) == -1
+		|| tcgetattr(STDIN_FILENO, &raw_t) == -1)
 	{
 		write(STDOUT_FILENO, "error with tcgetattr\n", 21);
 		exit (1);

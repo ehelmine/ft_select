@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 11:50:00 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:29:32 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	handle_cont(int signal_num)
 	if (signal_num == SIGCONT)
 	{
 		g_plus->raw = 1;
-		get_terminal_info(g_plus);
+		get_terminal_info(g_plus, 0);
 		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_raw_t) == -1)
 		{
 			stop_raw_mode(g_plus->d_orig_t, g_plus);

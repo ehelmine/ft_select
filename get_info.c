@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 12:15:38 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 13:29:15 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,8 @@ int	get_terminal_capabilities(t_select *data)
 ** the specified type is not defined in it, and some other value otherwise.
 */
 
-void	get_terminal_info(t_select *data)
+void	get_terminal_info(t_select *data, int check)
 {
-	int	check;
-
 	data->fd_out = 1;
 	if (isatty(1) == 0)
 	{
