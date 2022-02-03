@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:45:21 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/03 18:49:21 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_select
 {
 	int				fd_in;
 	int				fd_out;
-	char			*device_name;
 	char			*terminal_envname;
 	int				output_cols;
 	char			input[MAX_INPUT_LEN][MAX_INPUT_LEN];
@@ -46,9 +45,7 @@ typedef struct s_select
 	char			*term_me_off_app;
 	int				output_len;
 	char			*output;
-	int				i;
 	int				raw;
-	int				extra_y;
 	struct termios	d_orig_t;
 	struct termios	d_raw_t;
 }				t_select;
