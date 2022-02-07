@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/07 12:32:53 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:31:22 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <term.h>
 # include <signal.h>
-# define MAX_INPUT_LEN 1024
+# define MAX_INPUT_LEN 2048
 
 typedef struct s_select
 {
@@ -65,7 +65,6 @@ void			cursor_position(t_select *data);
 int				read_loop(struct termios orig_t, t_select *data);
 
 void			delete_option(t_select *data, struct termios orig_t);
-void			move_lines_one_up(t_select *data);
 void			arrow_move_or_tick_box(t_select *data, char letter);
 
 int				f_putc(int c);

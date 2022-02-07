@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/07 12:43:53 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 15:50:15 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,11 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	if (c == '\x1b')
 	{
 		if (read_escape_character(data, orig_t) == -1)
+		{
+			tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+			stop_raw_mode(orig_t, data);
 			return (-1);
+		}
 	}
 	else if (c == 13)
 		write_options(data, orig_t);
@@ -75,7 +79,13 @@ static int	reading(struct termios orig_t, t_select *data)
 		return (check_read_character(orig_t, c, data));
 	else if (check == 0)
 		return (1);
-	return (-1);
+	else
+	{
+		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+		stop_raw_mode(orig_t, data);
+		output_error(data, 5);
+	}
+	return (0);
 }
 
 /*
@@ -140,11 +150,5 @@ int	read_loop(struct termios orig_t, t_select *data)
 			break ;
 	}
 	ft_memdel((void *)&data->output);
-	if (check == -1)
-	{
-		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
-		stop_raw_mode(orig_t, data);
-		output_error(data, 5);
-	}
 	return (1);
 }

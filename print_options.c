@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:15:41 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/07 12:49:46 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:29:24 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	write_options(t_select *data, struct termios orig_t)
 		}
 		i++;
 	}
-	write(STDOUT_FILENO, "\n", 1);
 	exit (EXIT_SUCCESS);
 }
 
