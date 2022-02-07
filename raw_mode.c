@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:28:01 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:01:59 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 	{
 		if (tcsetattr(data->fd_out, TCSAFLUSH, &orig_t) == -1)
 		{
-			write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
+			write(STDERR_FILENO, "error in exit with tcsetattr\n", 29);
 			exit (EXIT_FAILURE);
 		}
 	}
@@ -63,7 +63,7 @@ void	enter_raw_mode(t_select *data)
 	if (tcgetattr(STDIN_FILENO, &orig_t) == -1
 		|| tcgetattr(STDIN_FILENO, &raw_t) == -1)
 	{
-		write(STDOUT_FILENO, "error with tcgetattr\n", 21);
+		write(STDERR_FILENO, "error with tcgetattr\n", 21);
 		exit (EXIT_FAILURE);
 	}
 	raw_t.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
@@ -74,7 +74,7 @@ void	enter_raw_mode(t_select *data)
 	if (tcsetattr(data->fd_out, TCSAFLUSH, &raw_t) == -1)
 	{
 		stop_raw_mode(orig_t, data);
-		write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
+		write(STDERR_FILENO, "error in begin with tcsetattr\n", 30);
 		exit (EXIT_FAILURE);
 	}
 	data->raw = 1;

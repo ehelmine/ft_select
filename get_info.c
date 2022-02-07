@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:41:56 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:32:49 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	get_rest_of_col_lengths(t_select *data, int biggest_len_f, int i,
 	}
 }
 
-void	check_amount_of_output_cols(t_select *data, int i, int x)
+static void	check_amount_of_output_cols(t_select *data, int i, int x)
 {
 	int	check;
 	int	biggest_len_f;
@@ -86,8 +86,8 @@ int	get_window_size(t_select *data, int when)
 		check_amount_of_output_cols(data, 0, 0);
 		return (1);
 	}
-	data->window_rows = 25;
-	data->window_columns = 50;
+	data->window_rows = 24;
+	data->window_columns = 80;
 	check_amount_of_output_cols(data, 0, 0);
 	return (1);
 }
@@ -127,6 +127,8 @@ int	get_terminal_capabilities(t_select *data)
 {
 	ft_memdel((void *)&data->buff_area);
 	data->buff_area = (char *)malloc(sizeof(char) * 2048);
+	if (data->buff_area == NULL)
+		output_error(data, 4);
 	data->term_cl_clear_screen = tgetstr("cl", &data->buff_area);
 	data->term_us_start_uline = tgetstr("us", &data->buff_area);
 	data->term_ue_stop_uline = tgetstr("ue", &data->buff_area);

@@ -6,11 +6,17 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:49:08 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:43:53 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_select.h"
+
+/*
+** \x1b + [ + A 	= arrow up
+** \x1b + [ + B 	= arrow down
+** \x1b + [ + 3 + ~	= small delete button
+*/
 
 static int	read_escape_character(t_select *data, struct termios orig_t)
 {
@@ -33,16 +39,18 @@ static int	read_escape_character(t_select *data, struct termios orig_t)
 	return (1);
 }
 
+/*
+**  13 = carriage return so return-button
+** 127 = big delete-button
+** ' ' = space-button
+*/
+
 static int	check_read_character(struct termios orig_t, char c, t_select *data)
 {
 	if (c == '\x1b')
 	{
 		if (read_escape_character(data, orig_t) == -1)
-		{
-			tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
-			stop_raw_mode(orig_t, data);
 			return (-1);
-		}
 	}
 	else if (c == 13)
 		write_options(data, orig_t);
@@ -126,11 +134,17 @@ int	read_loop(struct termios orig_t, t_select *data)
 		if (get_window_size(data, 1) == -1)
 			fill_output(data);
 		if (data->output)
-			write(data->fd_out, data->output, ft_strlen(data->output));
+			write(data->fd_out, data->output, data->output_len);
 		check = reading(orig_t, data);
 		if (check == -1)
 			break ;
 	}
 	ft_memdel((void *)&data->output);
+	if (check == -1)
+	{
+		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+		stop_raw_mode(orig_t, data);
+		output_error(data, 5);
+	}
 	return (1);
 }

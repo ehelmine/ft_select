@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:44:47 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:21:01 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,13 @@ static void	construct_extra_line(t_select *data, char *spaces, int i)
 		append_to_str(data, data->term_me_off_app);
 }
 
-static void	fill_extra_cols(t_select *data, int i, int x)
+static void	fill_extra_cols(t_select *data, int i, int x, int len)
 {
 	int		y;
-	int		len;
 	char	*spaces;
 	int		times;
 	int		tmp;
 
-	len = 0;
 	i += data->window_rows * (x + 1);
 	times = 0;
 	tmp = i;
@@ -68,6 +66,8 @@ static void	fill_extra_cols(t_select *data, int i, int x)
 	y = data->col_lengths[times - 1]
 		- data->input_info[i - data->window_rows][1] + 3;
 	spaces = (char *)malloc(sizeof(char) * (y + 1));
+	if (spaces == NULL)
+		output_error(data, 4);
 	len = 0;
 	while (len < y)
 		spaces[len++] = ' ';
@@ -97,7 +97,7 @@ static int	construct_one_line(t_select *data, int x, int i)
 	if (data->input_info[i][0] == 1)
 		append_to_str(data, data->term_me_off_app);
 	while (x < data->output_cols - 1)
-		fill_extra_cols(data, i, x++);
+		fill_extra_cols(data, i, x++, 0);
 	if (i == data->window_rows - 1)
 		return (-1);
 	if (i < data->amount_of_input - 1 || i == 0)

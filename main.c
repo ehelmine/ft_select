@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:35:53 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:15:42 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_select	*g_plus;
 
 /*
 ** Write the arguments we got as input to data->input[][] array.
-** 
 */
 
 static void	args_to_struct(int argc, char **argv, t_select *data)
@@ -28,7 +27,7 @@ static void	args_to_struct(int argc, char **argv, t_select *data)
 	x = 0;
 	while (i < argc && x < MAX_INPUT_LEN - 1)
 	{
-		ft_strcpy(data->input[x], argv[i]);
+		ft_memcpy(data->input[x], argv[i], ft_strlen(argv[i]));
 		i++;
 		x++;
 	}

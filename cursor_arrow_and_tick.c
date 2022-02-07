@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:01:10 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:44:31 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:47:01 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,15 @@ static void	more_input_than_window_rows(t_select *data, char **x, char **y)
 	*x = ft_itoa(total + 2);
 }
 
+/*
+** We determine new cursor position based on information data->cursor_y and
+** data->cursor_x. If y is bigger than amount of terminal rows, we need
+** to call more_input_than_window_rows to get right values for x and y
+** (if cursor_y > rows, it means there's going to be multiple columns).
+** If char *x or *y either point to NULL, we call output_error as
+** we don't want the program continue when cursor can't find good position.
+*/
+
 void	cursor_position(t_select *data)
 {
 	char	*x;
@@ -89,6 +98,6 @@ void	cursor_position(t_select *data)
 		ft_memdel((void *)&tmp);
 	}
 	else
-		data->cursor_pos = ft_strdup("");
+		output_error(data, 4);
 	ft_memdel_two((void *)&x, (void *)&y);
 }

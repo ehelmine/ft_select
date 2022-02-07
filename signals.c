@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/03 18:38:20 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:02:49 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	handle_quit(int signal_num)
 	{
 		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_orig_t) == -1)
 		{
-			write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
+			write(STDERR_FILENO, "error in exit with tcsetattr\n", 29);
 			exit (EXIT_FAILURE);
 		}
 		ft_memdel((void *)&g_plus->output);
@@ -44,7 +44,7 @@ static void	handle_tstp(int signal_num)
 	{
 		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_orig_t) == -1)
 		{
-			write(STDOUT_FILENO, "error in exit with tcsetattr\n", 29);
+			write(STDERR_FILENO, "error in exit with tcsetattr\n", 29);
 			exit (EXIT_FAILURE);
 		}
 		g_plus->raw = 0;
@@ -63,7 +63,7 @@ static void	handle_cont(int signal_num)
 		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_raw_t) == -1)
 		{
 			stop_raw_mode(g_plus->d_orig_t, g_plus);
-			write(STDOUT_FILENO, "error in begin with tcsetattr\n", 30);
+			write(STDERR_FILENO, "error in begin with tcsetattr\n", 30);
 			exit (EXIT_FAILURE);
 		}
 		signal(SIGTSTP, handle_tstp);
