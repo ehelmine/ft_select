@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/07 12:02:49 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:09:14 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	handle_cont(int signal_num)
 		get_window_size(g_plus, 1);
 		fill_output(g_plus);
 		if (g_plus->output)
-			write(g_plus->fd_out, g_plus->output, ft_strlen(g_plus->output));
+			write(g_plus->fd_out, g_plus->output, g_plus->output_len);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/07 18:31:22 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:08:42 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_select
 	char			*term_ue_stop_uline;
 	char			*term_mr_video;
 	char			*term_me_off_app;
-	int				output_len;
+	size_t			output_len;
 	char			*output;
 	int				raw;
 	struct termios	d_orig_t;

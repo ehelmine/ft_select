@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 21:03:30 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/09/22 15:41:31 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:10:10 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	write_float_8(t_val *all, int x, int i)
 			all->end_str = ft_itoa(all->end_i);
 			if (all->end_str == NULL)
 				return (-1);
-			i = ft_strlen(all->end_str) - 1;
+			i = (int)ft_strlen(all->end_str) - 1;
 			if (all->big_l == 1)
 				write_float_8_second(all);
 			else if ((all->begin_i == 0 && all->end_i == 0)

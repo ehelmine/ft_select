@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 17:36:20 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/05/01 20:11:51 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/08 16:11:30 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	write_s_left_ad(t_val *all)
 		if (all->str != NULL)
 		{
 			ft_putstr(all->str);
-			all->output_len += ft_strlen(all->str);
+			all->output_len += (int)ft_strlen(all->str);
 		}
 		else
 		{
@@ -30,7 +30,7 @@ static void	write_s_left_ad(t_val *all)
 	else if (all->str_cpy != NULL)
 	{
 		ft_putstr(all->str_cpy);
-		all->output_len += ft_strlen(all->str_cpy);
+		all->output_len += (int)ft_strlen(all->str_cpy);
 		free(all->str_cpy);
 	}
 	while (all->minimum_width > 0)
@@ -54,7 +54,7 @@ static void	write_s_right_ad(t_val *all)
 		if (all->str != NULL)
 		{
 			ft_putstr(all->str);
-			all->output_len += ft_strlen(all->str);
+			all->output_len += (int)ft_strlen(all->str);
 		}
 		else
 		{
@@ -65,7 +65,7 @@ static void	write_s_right_ad(t_val *all)
 	else
 	{
 		ft_putstr(all->str_cpy);
-		all->output_len += ft_strlen(all->str_cpy);
+		all->output_len += (int)ft_strlen(all->str_cpy);
 		free(all->str_cpy);
 	}
 }
@@ -78,7 +78,7 @@ int	write_s(t_val *all)
 	all->str_cpy = NULL;
 	all->len = 1;
 	if (all->str)
-		all->len = ft_strlen(all->str);
+		all->len = (int)ft_strlen(all->str);
 	if (all->str == NULL)
 	{
 		all->len = 6;
@@ -90,7 +90,7 @@ int	write_s(t_val *all)
 		all->str_cpy = ft_strndup(all->str, all->precision);
 		if (all->str_cpy == NULL)
 			return (-1);
-		all->minimum_width = all->width - ft_strlen(all->str_cpy);
+		all->minimum_width = all->width - (int)ft_strlen(all->str_cpy);
 	}
 	if (all->new_flags[0] != '-')
 		write_s_right_ad(all);
