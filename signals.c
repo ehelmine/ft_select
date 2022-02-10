@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/08 16:09:14 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:43:17 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void	handle_quit(int signal_num)
 			exit (EXIT_FAILURE);
 		}
 		ft_memdel((void *)&g_plus->output);
-		tputs(g_plus->term_cl_clear_screen, g_plus->window_rows - 1, &f_putc);
-		exit(EXIT_SUCCESS);
+		tputs(g_plus->term_te_stop, 1, f_putc);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -50,7 +50,7 @@ static void	handle_tstp(int signal_num)
 		g_plus->raw = 0;
 		signal(SIGTSTP, SIG_DFL);
 		ioctl(STDERR_FILENO, TIOCSTI, "\x1A");
-		tputs(g_plus->term_cl_clear_screen, g_plus->window_rows, &f_putc);
+		tputs(g_plus->term_te_stop, 1, f_putc);
 	}
 }
 
@@ -67,6 +67,7 @@ static void	handle_cont(int signal_num)
 			exit (EXIT_FAILURE);
 		}
 		signal(SIGTSTP, handle_tstp);
+		tputs(g_plus->term_ti_start, 1, f_putc);
 		get_window_size(g_plus, 1);
 		fill_output(g_plus);
 		if (g_plus->output)

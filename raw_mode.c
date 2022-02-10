@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/07 18:22:06 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:38:20 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	stop_raw_mode(struct termios orig_t, t_select *data)
 {
+	tputs(data->term_te_stop, 1, f_putc);
 	if (data && data->raw)
 	{
 		if (tcsetattr(data->fd_out, TCSAFLUSH, &orig_t) == -1)
@@ -80,5 +81,6 @@ void	enter_raw_mode(t_select *data)
 	data->raw = 1;
 	data->d_orig_t = orig_t;
 	data->d_raw_t = raw_t;
+	tputs(data->term_ti_start, 1, f_putc);
 	return ;
 }

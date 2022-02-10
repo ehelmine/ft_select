@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/09 20:54:07 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:37:26 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	check_read_character(struct termios orig_t, char c, t_select *data)
 	{
 		if (read_escape_character(data, orig_t) == -1)
 		{
-			tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+			tputs(data->term_cl_clear_screen, data->window_rows - 1, f_putc);
 			stop_raw_mode(orig_t, data);
 			return (-1);
 		}
@@ -81,7 +81,7 @@ static int	reading(struct termios orig_t, t_select *data)
 		return (1);
 	else
 	{
-		tputs(data->term_cl_clear_screen, data->window_rows - 1, &f_putc);
+		tputs(data->term_cl_clear_screen, data->window_rows - 1, f_putc);
 		stop_raw_mode(orig_t, data);
 		output_error(data, 5);
 	}
@@ -117,19 +117,6 @@ static void	set_start_values(t_select *data)
 	}
 }
 
-/*
-** \x1b[2J explanation:
-** \x1b is escape character (27)
-** \x1b and [ are together called escape sequence
-** J means clear the screen
-** escape sequence takes arguments and args come before the command, so in this
-** case number 2 before character J tells to do clearing for the whole screen
-**
-** \x1b[H
-** H tells us to position cursor on the top left corner
-**
-*/
-
 int	read_loop(struct termios orig_t, t_select *data)
 {
 	int		i;
@@ -141,8 +128,6 @@ int	read_loop(struct termios orig_t, t_select *data)
 	fill_output(data);
 	while (1)
 	{
-		if (get_window_size(data, 1) == -1)
-			fill_output(data);
 		if (data->output)
 			write(data->fd_out, data->output, data->output_len);
 		check = reading(orig_t, data);

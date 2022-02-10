@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/09 20:54:34 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:35:34 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_select
 	char			*cursor_pos;
 	char			terminal_description[2048];
 	char			*buff_area;
+	char			*term_ti_start;
+	char			*term_te_stop;
 	char			*term_cl_clear_screen;
 	char			*term_us_start_uline;
 	char			*term_ue_stop_uline;
