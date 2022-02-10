@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 14:15:41 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 12:57:00 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:29:38 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	write_options(t_select *data, struct termios orig_t)
 			if (first != 0)
 				write(STDOUT_FILENO, " ", 1);
 			first = 1;
-			write(STDOUT_FILENO, &data->input[i], data->input_info[i][1]);
+			write(STDOUT_FILENO, data->input[i], data->input_info[i][1]);
 		}
 		i++;
 	}

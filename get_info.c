@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 10:36:14 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:52:14 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,21 @@ static void	check_amount_of_output_cols(t_select *data, int i, int x)
 ** Terminal IOCtl (stands for Input/Output Control) Get WINdow SiZe
 */
 
-int	get_window_size(t_select *data, int when)
+void	get_window_size(t_select *data)
 {
 	struct winsize	window;
 
 	if (ioctl(data->fd_out, TIOCGWINSZ, &window) != -1)
 	{
-		if (when > 0 && (data->window_rows != window.ws_row
-				|| data->window_columns != window.ws_col))
-		{
-			data->window_rows = window.ws_row;
-			data->window_columns = window.ws_col;
-			check_amount_of_output_cols(data, 0, 0);
-			return (-1);
-		}
 		data->window_rows = window.ws_row;
 		data->window_columns = window.ws_col;
 		check_amount_of_output_cols(data, 0, 0);
-		return (1);
+		return ;
 	}
 	data->window_rows = 24;
 	data->window_columns = 80;
 	check_amount_of_output_cols(data, 0, 0);
-	return (1);
+	return ;
 }
 
 /*
