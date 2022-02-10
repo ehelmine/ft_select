@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 16:35:26 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 13:54:38 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 14:28:58 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_select
 	int				cursor_y;
 	int				col_lengths[MAX_INPUT_LEN];
 	char			*cursor_pos;
-	char			terminal_description[2048];
+	char			terminal_description[MAX_INPUT_LEN];
 	char			*buff_area;
 	char			*term_ti_start;
 	char			*term_te_stop;
