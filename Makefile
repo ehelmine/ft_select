@@ -6,20 +6,20 @@
 #    By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 12:59:07 by ehelmine          #+#    #+#              #
-#    Updated: 2022/02/07 18:40:49 by ehelmine         ###   ########.fr        #
+#    Updated: 2022/02/10 14:32:27 by ehelmine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_select
 
-SRCS = main.c raw_mode.c read.c get_info.c error.c cursor_arrow_and_tick.c \
-	delete_line.c output.c print_options.c signals.c
+SRCS = ft_select.c raw_mode.c read.c get_info.c error.c signals.c output.c \
+		cursor_arrow_and_tick.c delete_line.c print_options.c 
 
 OBJS_DIR = objs
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
