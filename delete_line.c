@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 11:36:18 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 10:37:05 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:56:48 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	delete_option(t_select *data, struct termios orig_t)
 		tputs(data->term_cl_clear_screen, data->window_rows - 1, f_putc);
 		stop_raw_mode(orig_t, data);
 		ft_memdel((void *)&data->output);
-		exit (EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
 	}
 	get_window_size(data, 1);
 }

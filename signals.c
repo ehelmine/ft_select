@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 10:43:17 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:57:28 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	handle_quit(int signal_num)
 		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_orig_t) == -1)
 		{
 			write(STDERR_FILENO, "error in exit with tcsetattr\n", 29);
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		ft_memdel((void *)&g_plus->output);
 		tputs(g_plus->term_te_stop, 1, f_putc);
@@ -45,7 +45,7 @@ static void	handle_tstp(int signal_num)
 		if (tcsetattr(g_plus->fd_out, TCSAFLUSH, &g_plus->d_orig_t) == -1)
 		{
 			write(STDERR_FILENO, "error in exit with tcsetattr\n", 29);
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		g_plus->raw = 0;
 		signal(SIGTSTP, SIG_DFL);
@@ -64,7 +64,7 @@ static void	handle_cont(int signal_num)
 		{
 			stop_raw_mode(g_plus->d_orig_t, g_plus);
 			write(STDERR_FILENO, "error in begin with tcsetattr\n", 30);
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		signal(SIGTSTP, handle_tstp);
 		tputs(g_plus->term_ti_start, 1, f_putc);
@@ -125,7 +125,7 @@ void	check_signals(void)
 		|| signal(SIGWINCH, handle_winch) == SIG_ERR)
 	{
 		stop_raw_mode(g_plus->d_orig_t, g_plus);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	if (signal(SIGQUIT, handle_quit) == SIG_ERR || signal(SIGINT, handle_quit)
 		== SIG_ERR || signal(SIGHUP, handle_quit) == SIG_ERR
@@ -140,6 +140,6 @@ void	check_signals(void)
 		|| signal(SIGUSR2, handle_quit) == SIG_ERR)
 	{
 		stop_raw_mode(g_plus->d_orig_t, g_plus);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 }

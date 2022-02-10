@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/08 16:08:06 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:56:57 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	args_to_struct(int argc, char **argv, t_select *data)
 		if ((int)ft_strlen(argv[i]) >= MAX_INPUT_LEN)
 		{
 			write(STDERR_FILENO, "Argument too long, max length is 2048\n", 38);
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		ft_memcpy(data->input[x], argv[i], ft_strlen(argv[i]));
 		i++;

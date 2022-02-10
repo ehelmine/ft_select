@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 09:30:24 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/07 12:39:10 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:56:54 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	output_error(t_select *data, int i)
 		write(STDERR_FILENO, "Error with memory allocation\n", 29);
 	else if (i == 5)
 		write(STDERR_FILENO, "Read returned -1\n", 17);
-	exit (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
 }

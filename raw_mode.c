@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 10:38:20 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 12:57:10 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 		if (tcsetattr(data->fd_out, TCSAFLUSH, &orig_t) == -1)
 		{
 			write(STDERR_FILENO, "error in exit with tcsetattr\n", 29);
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 	}
 }
@@ -65,7 +65,7 @@ void	enter_raw_mode(t_select *data)
 		|| tcgetattr(STDIN_FILENO, &raw_t) == -1)
 	{
 		write(STDERR_FILENO, "error with tcgetattr\n", 21);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	raw_t.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
 	raw_t.c_oflag &= ~(OPOST);
@@ -76,7 +76,7 @@ void	enter_raw_mode(t_select *data)
 	{
 		stop_raw_mode(orig_t, data);
 		write(STDERR_FILENO, "error in begin with tcsetattr\n", 30);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	data->raw = 1;
 	data->d_orig_t = orig_t;
