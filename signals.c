@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 12:57:28 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:17:59 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,27 +95,6 @@ static void	handle_cont(int signal_num)
 ** 27	SIGPROF	profiling timer alarm (see setitimer(2))
 ** 30	SIGUSR1	User defined signal 1
 ** 31	SIGUSR2	User defined signal 2
- 
-     4     SIGILL       create core image    illegal instruction
-     5     SIGTRAP      create core image    trace trap
-     6     SIGABRT      create core image    abort program (formerly SIGIOT)
-     7     SIGEMT       create core image    emulate instruction executed
-     8     SIGFPE       create core image    floating-point exception
-     10    SIGBUS       create core image    bus error
-     11    SIGSEGV      create core image    segmentation violation
-     12    SIGSYS       create core image    non-existent system call invoked
-
-** 17	SIGSTOP	stop process	stop (cannot be caught or ignored)
-** 21	SIGTTIN	stop process	background read attempted from control terminal
-** 22	SIGTTOU	stop process	background write attempted to control terminal
-
-** 16	SIGURG	discard signal	urgent condition present on socket
-** 20	SIGCHLD	discard signal	child status has changed
-** 23	SIGIO	discard signal	I/O is possible on a descriptor (see fcntl(2))
-** 29	SIGINFO	discard signal	status request from keyboard
-**
-**
-**
 */
 
 void	check_signals(void)
