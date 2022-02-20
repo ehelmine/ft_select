@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 10:22:51 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:51:17 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ static void	fill_extra_cols(t_select *data, int i, int x, int len)
 	ft_memdel((void *)&spaces);
 }
 
-// \x1b[?25l = hide cursor
-// \x1b[?25h = show cursor
-
 static int	construct_one_line(t_select *data, int x, int i)
 {
 	if (i == data->cursor_y - 1)
@@ -108,10 +105,8 @@ static int	construct_one_line(t_select *data, int x, int i)
 void	fill_output(t_select *data)
 {
 	int	i;
-	int	print;
 
 	i = 0;
-	print = 0;
 	ft_memdel((void *)&data->output);
 	data->output_len = 0;
 	append_to_str(data, data->term_cl_clear_screen);

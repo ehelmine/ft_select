@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 09:58:56 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 14:31:44 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:52:53 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv)
 		get_terminal_capabilities(data);
 		enter_raw_mode(data);
 		read_loop(data->d_orig_t, data);
+		ft_memdel((void *)&data);
 	}
 	return (0);
 }

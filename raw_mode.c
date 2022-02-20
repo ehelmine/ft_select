@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:40:48 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 12:57:10 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:56:12 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 
 /*
 **
-** BRKINT flag turn off =
-**
-**
 ** ICRNL flag turn off = stops terminal translating any carriage return
 ** (13, '\r') that are gotten as input from user into newlines (10, '\n')
 ** When flag is on, Ctrl-M is read as 10 (we expect it to be 13 (13th letter
@@ -37,22 +34,24 @@ void	stop_raw_mode(struct termios orig_t, t_select *data)
 ** After turning off the flag: Ctrl-M is 13 (carriage return) and
 ** also enter key is 13.
 **
-** INPCK flag turn off =
-**
-** ISTRIP flag turn off =
-**
-** IXON flag turn off = 
+** IXON flag turn off = Ctrl-S and Ctrl-Q are used for software flow control.
+** Ctrl-S stops data from being transmitted to the terminal until you press
+** Ctrl-QXON comes from the names of the two control characters that Ctrl-S
+** and Ctrl-Q produce: XOFF to pause transmission and XON to resume transmission.
 **
 ** OPOST flag turn off = turns off all output processing features
 **
 ** ECHO flag turn off = doesn't echo read input
 **
-** ICANON flag turn off = 
+** ICANON flag turn off = operate in noncanonical mode
 **
 ** IEXTEN flag turn off = Ctrl-V is now read as 22 and Ctrl-O (mac) is 15.
 ** Without turning off the flag on some systems with Ctrl-V,
 ** terminal waits for another character input and in mac terminal driver is
 ** set to discard Ctrl-O.
+**
+** VMIN = Minimum number of characters for noncanonical read (MIN).
+** VTIME = Timeout in deciseconds for noncanonical read (TIME).
 **
 */
 
@@ -67,7 +66,7 @@ void	enter_raw_mode(t_select *data)
 		write(STDERR_FILENO, "error with tcgetattr\n", 21);
 		exit(EXIT_FAILURE);
 	}
-	raw_t.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
+	raw_t.c_iflag &= ~(ICRNL | IXON);
 	raw_t.c_oflag &= ~(OPOST);
 	raw_t.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw_t.c_cc[VMIN] = 0;

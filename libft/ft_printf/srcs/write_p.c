@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 17:58:06 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/05/03 14:21:33 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:06:51 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	write_p_3(t_val *all, char *output, char *number, int i)
 	return (1);
 }
 
-static int	write_p_2(t_val *all, char *number, char *abc)
+static void	write_p_2(t_val *all, char *number, char *abc)
 {
 	int	a;
 	int	x;
@@ -58,7 +58,7 @@ static int	write_p_2(t_val *all, char *number, char *abc)
 	all->real_len = all->len;
 	if (all->width > all->len)
 		all->real_len = all->width;
-	return (a);
+	return ;
 }
 
 int	write_p(t_val *all)
@@ -66,13 +66,12 @@ int	write_p(t_val *all)
 	char	*abc;
 	char	*output;
 	char	*number;
-	int		a;
 
 	abc = "0123456789abcdef";
 	number = (char *)malloc(sizeof(char) * 1000);
 	if (number == NULL)
 		return (-1);
-	a = write_p_2(all, number, abc);
+	write_p_2(all, number, abc);
 	output = (char *)malloc(sizeof(char) * (all->real_len + 1));
 	if (output == NULL)
 	{

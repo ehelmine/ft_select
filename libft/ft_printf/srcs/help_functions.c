@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 17:05:32 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/06/07 17:54:38 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:08:27 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	get_arg(t_val *all, va_list args, char x)
 		all->begin_str = NULL;
 		all->end_str = NULL;
 		all->str = NULL;
-		return (write_float(all, 0, 0, 0));
+		return (write_float(all, 0, 0));
 	}
 	else if (x == 'i' || x == 'd')
 		return (get_arg_signed_int(all, args));

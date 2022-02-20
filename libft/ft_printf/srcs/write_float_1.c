@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 21:02:38 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/09/22 15:41:27 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:07:04 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,8 @@ static int	write_float_2(t_val *all)
 	return (1);
 }
 
-int	write_float_second(t_val *all, int out)
+int	write_float_second(t_val *all)
 {
-	out = 0;
 	if ((int)all->end_i % 10 == 9)
 	{
 		if (write_float_9(all) == -1)
@@ -104,7 +103,7 @@ int	write_float_second(t_val *all, int out)
 	return (1);
 }
 
-int	write_float(t_val *all, int i, int x, int out)
+int	write_float(t_val *all, int i, int x)
 {
 	if (write_float_2(all) == -1)
 		return (-1);
@@ -112,7 +111,7 @@ int	write_float(t_val *all, int i, int x, int out)
 	write_float_4(all);
 	if (all->orig_precision == 0)
 	{
-		if (write_float_5(all, out) == -1)
+		if (write_float_5(all) == -1)
 			return (-1);
 	}
 	else if (all->orig_precision > 0)
@@ -125,7 +124,7 @@ int	write_float(t_val *all, int i, int x, int out)
 		}
 		else if ((int)all->d_num > 5)
 		{
-			if (write_float_second(all, out) == -1)
+			if (write_float_second(all) == -1)
 				return (-1);
 		}
 	}

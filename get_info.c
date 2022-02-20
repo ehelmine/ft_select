@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 13:52:14 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:51:55 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,37 +83,6 @@ void	get_window_size(t_select *data)
 	check_amount_of_output_cols(data, 0, 0);
 	return ;
 }
-
-/*
-** int tgetnum (char *name);
-** int tgetflag (char *name);
-** char *tgetstr (char *name, char **area);
-** You can provide the space. Provide for the argument area the address of
-** a pointer variable of type char *. Before calling tgetstr, initialize
-** the variable to point at available space. Then tgetstr will store
-** the string value in that space and will increment the pointer variable
-** to point after the space that has been used. You can use the same
-** pointer variable for many calls to tgetstr. There is no way to determine
-** how much space is needed for a single string, and no way for you to prevent
-** or handle overflow of the area you have provided. However, you can be sure
-** that the total size of all the string values you will obtain from
-** the terminal description is no greater than the size of the description
-** (unless you get the same capability twice). You can determine that size
-** with strlen on the buffer you provided to tgetent. Providing the space
-** yourself is the only method supported by the Unix version of termcap.
-** ** ** ** ** ** ** ** ** ** ** ** ** ** **
-** `cm' = String of commands to position the cursor at line l, column c. 
-** Both parameters are origin-zero, and are defined relative to the screen,
-** not relative to display memory. All display terminals except a few very
-** obsolete ones support `cm', so it is acceptable for an application program
-** to refuse to operate on terminals lacking `cm'.
-** ** ** ** ** ** ** ** ** ** ** ** ** ** **
-** `kl' = String of input characters sent by typing the left-arrow key.
-** `kr' = String of input characters sent by typing the right-arrow key.
-** `ku' = String of input characters sent by typing the up-arrow key.
-** `kd' = String of input characters sent by typing the down-arrow key.
-** ** ** ** ** ** ** ** ** ** ** ** ** ** **
-*/
 
 int	get_terminal_capabilities(t_select *data)
 {

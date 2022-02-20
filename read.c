@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 13:52:24 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 14:54:58 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,8 @@ static void	set_start_values(t_select *data)
 
 int	read_loop(struct termios orig_t, t_select *data)
 {
-	int		i;
 	int		check;
 
-	i = 0;
 	set_start_values(data);
 	get_window_size(data);
 	fill_output(data);

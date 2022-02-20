@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 17:20:52 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/05/01 17:53:59 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 14:59:32 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,8 @@ int	write_d_and_i_right_ad(t_val *all)
 	char	*output;
 	char	*num_str;
 	int		x;
-	int		i;
 
 	x = 0;
-	i = 0;
 	output = (char *)malloc(sizeof(char) * 10000);
 	if (output == NULL)
 		return (-1);
