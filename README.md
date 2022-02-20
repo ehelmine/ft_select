@@ -8,6 +8,6 @@ project has been done within Hive Helsinki ft_select subject that you can find i
 how to run it?<br />
 git clone https://github.com/ehelmine/ft_select.git ellahelminen_select ; cd ellahelminen_select ; make <br />
 after this you'll have an executable called ft_select that you can use for example in these ways<br />
-more `./ft_select *c`<br />
-`./ft_select ls pwd`<br />
+more \`./ft_select *c\`<br />
+\`./ft_select ls pwd\`<br />
 ./ft_select <what> <ever> <arguments> <you> <want> <to> <put> <here> <br />
