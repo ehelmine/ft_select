@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 14:41:29 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/05/20 13:16:34 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:23:11 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,11 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t		i;
 	char		*dsst;
 	const char	*srrc;
 
 	dsst = (char *)dst;
 	srrc = (char *)src;
-	i = 0;
 	if (len == 0)
 		return (dst);
 	if (dst > src)

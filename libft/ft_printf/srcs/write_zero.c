@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:20:13 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/05/01 17:55:08 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:19:50 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ static void	write_zero_2(t_val *all)
 
 void	write_zero(t_val *all)
 {
-	int	x;
-
-	x = 0;
 	if (all->width == -1 && ((all->conv == 'o' && !all->hash_flag)
 			|| (all->conv == 'x' || all->conv == 'X')))
 		all->real_len -= 1;

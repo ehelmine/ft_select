@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 21:03:30 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/08 16:10:10 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:20:33 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	write_float_8(t_val *all, int x, int i)
 			all->end_str = ft_itoa(all->end_i);
 			if (all->end_str == NULL)
 				return (-1);
-			i = (int)ft_strlen(all->end_str) - 1;
+			i = ft_strlen(all->end_str) - 1;
 			if (all->big_l == 1)
 				write_float_8_second(all);
 			else if ((all->begin_i == 0 && all->end_i == 0)
@@ -42,7 +42,7 @@ int	write_float_8(t_val *all, int x, int i)
 
 void	write_float_7(t_val *all)
 {
-	if (all->big_l == 1 && all->orig_precision == 1 && (int)all->d_num == 5)
+	if (all->big_l == 1 && all->org_precision == 1 && (int)all->d_num == 5)
 	{
 		if (all->end_i == 0 || all->end_i == 1 || all->end_i == 5
 			|| all->end_i == 8 || all->end_i == 7)
@@ -113,9 +113,8 @@ static int	write_float_5_second(t_val *all)
 	return (1);
 }
 
-int	write_float_5(t_val *all, int out)
+int	write_float_5(t_val *all)
 {
-	out = 0;
 	if ((int)all->d_num > 5)
 	{
 		free(all->begin_str);

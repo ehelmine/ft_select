@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 18:18:17 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/05/03 16:05:59 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:18:51 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,8 @@ static int	write_unsigned_2(t_val *all, char *number)
 
 int	write_unsigned(t_val *all)
 {
-	char	*abc;
 	char	*number;
 
-	abc = "0123456789abcdef";
 	number = convert_num(all);
 	if (number == NULL)
 		return (-1);

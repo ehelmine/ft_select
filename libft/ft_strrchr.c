@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 14:22:17 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/07/02 15:55:26 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:22:33 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int		i;
 	int		x;
 	char	y;
 
 	x = ft_strlen(s);
 	y = c;
-	i = 0;
 	while (x > 0)
 	{
 		if (s[x] == y)

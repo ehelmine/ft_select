@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 18:31:32 by ehelmine          #+#    #+#             */
-/*   Updated: 2021/09/22 15:41:02 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/03/24 11:21:44 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_val
 	int				extra_zero;
 	double			am_of_decimals;
 	double			yy;
-	int				orig_precision;
+	int				org_precision;
 	int				ii;
 	int				y;
 }					t_val;
@@ -115,9 +115,9 @@ int					write_unsigned(t_val *all);
 
 void				write_zero(t_val *all);
 
-int					write_float(t_val *all, int i, int x, int out);
+int					write_float(t_val *all, int i, int x);
 
-int					write_float_5(t_val *all, int out);
+int					write_float_5(t_val *all);
 
 void				write_float_7(t_val *all);
 

@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 21:04:23 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/08 16:10:54 by ehelmine         ###   ########.fr       */
+/*   Updated: 2021/05/03 16:12:06 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ static int	write_float_output_2(t_val *all, int i)
 	while (all->begin_str[ii] != '\0')
 		all->str[i++] = all->begin_str[ii++];
 	all->str[i] = '\0';
-	if (all->orig_precision != 0 || all->hash_flag == 1)
+	if (all->org_precision != 0 || all->hash_flag == 1)
 		all->str[i++] = '.';
-	if (all->orig_precision != 0)
+	if (all->org_precision != 0)
 	{
-		x = (int)ft_strlen(all->end_str);
-		while (x < all->orig_precision)
+		x = ft_strlen(all->end_str);
+		while (x < all->org_precision)
 		{
 			all->str[i++] = '0';
 			x++;
@@ -81,7 +81,7 @@ int	write_float_output(t_val *all)
 	if (all->negative_val < 1 && all->plus_flag == 1 && all->space_flag < 1)
 		all->str[all->y++] = '+';
 	all->y = write_float_output_2(all, all->y);
-	all->len = (int)ft_strlen(all->str);
+	all->len = ft_strlen(all->str);
 	if (all->len < all->width)
 		write_float_output_3(all, all->y);
 	all->output_len += all->len;
@@ -98,7 +98,7 @@ int	write_float_9(t_val *all)
 	all->end_str = ft_itoa(all->end_i);
 	if (all->end_str == NULL)
 		return (-1);
-	all->y = (int)ft_strlen(all->end_str) - 1;
+	all->y = ft_strlen(all->end_str) - 1;
 	while (all->y >= 0 && all->end_str[all->y] == '9')
 		all->y--;
 	all->end_str[all->y] = all->end_str[all->y] + 1;
@@ -119,7 +119,7 @@ void	write_float_8_second(t_val *all)
 		else
 		{
 			all->am_of_decimals = 1;
-			all->precision = all->orig_precision + 1;
+			all->precision = all->org_precision + 1;
 			while (all->precision != 0)
 			{
 				all->am_of_decimals *= 5;

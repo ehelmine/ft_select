@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 17:36:02 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/08 16:09:59 by ehelmine         ###   ########.fr       */
+/*   Updated: 2021/05/19 14:23:06 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_correct_flags(char *flags, va_list args, t_val *all)
 
 	ii = 0;
 	all->no_flags = 0;
-	i = (int)ft_strlen(flags) - 1;
+	i = ft_strlen(flags) - 1;
 	all->conv = flags[i];
 	all->zero_x = 0;
 	set_values(all, flags, flags[i]);
