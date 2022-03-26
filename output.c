@@ -6,7 +6,11 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:53:47 by ehelmine          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/03/26 13:09:24 by ehelmine         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/10 15:51:17 by ehelmine         ###   ########.fr       */
+>>>>>>> 398ec6d825907fda58380f32fdb29620bcdeedae
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +80,6 @@ static void	fill_extra_cols(t_select *data, int i, int x, int len)
 		construct_extra_line(data, spaces, i);
 	ft_memdel((void *)&spaces);
 }
-
-// \x1b[?25l = hide cursor
-// \x1b[?25h = show cursor
 
 static int	construct_one_line(t_select *data, int x, int i)
 {

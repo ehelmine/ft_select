@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 19:08:07 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 10:36:14 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:51:55 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,61 +67,22 @@ static void	check_amount_of_output_cols(t_select *data, int i, int x)
 ** Terminal IOCtl (stands for Input/Output Control) Get WINdow SiZe
 */
 
-int	get_window_size(t_select *data, int when)
+void	get_window_size(t_select *data)
 {
 	struct winsize	window;
 
 	if (ioctl(data->fd_out, TIOCGWINSZ, &window) != -1)
 	{
-		if (when > 0 && (data->window_rows != window.ws_row
-				|| data->window_columns != window.ws_col))
-		{
-			data->window_rows = window.ws_row;
-			data->window_columns = window.ws_col;
-			check_amount_of_output_cols(data, 0, 0);
-			return (-1);
-		}
 		data->window_rows = window.ws_row;
 		data->window_columns = window.ws_col;
 		check_amount_of_output_cols(data, 0, 0);
-		return (1);
+		return ;
 	}
 	data->window_rows = 24;
 	data->window_columns = 80;
 	check_amount_of_output_cols(data, 0, 0);
-	return (1);
+	return ;
 }
-
-/*
-** int tgetnum (char *name);
-** int tgetflag (char *name);
-** char *tgetstr (char *name, char **area);
-** You can provide the space. Provide for the argument area the address of
-** a pointer variable of type char *. Before calling tgetstr, initialize
-** the variable to point at available space. Then tgetstr will store
-** the string value in that space and will increment the pointer variable
-** to point after the space that has been used. You can use the same
-** pointer variable for many calls to tgetstr. There is no way to determine
-** how much space is needed for a single string, and no way for you to prevent
-** or handle overflow of the area you have provided. However, you can be sure
-** that the total size of all the string values you will obtain from
-** the terminal description is no greater than the size of the description
-** (unless you get the same capability twice). You can determine that size
-** with strlen on the buffer you provided to tgetent. Providing the space
-** yourself is the only method supported by the Unix version of termcap.
-** ** ** ** ** ** ** ** ** ** ** ** ** ** **
-** `cm' = String of commands to position the cursor at line l, column c. 
-** Both parameters are origin-zero, and are defined relative to the screen,
-** not relative to display memory. All display terminals except a few very
-** obsolete ones support `cm', so it is acceptable for an application program
-** to refuse to operate on terminals lacking `cm'.
-** ** ** ** ** ** ** ** ** ** ** ** ** ** **
-** `kl' = String of input characters sent by typing the left-arrow key.
-** `kr' = String of input characters sent by typing the right-arrow key.
-** `ku' = String of input characters sent by typing the up-arrow key.
-** `kd' = String of input characters sent by typing the down-arrow key.
-** ** ** ** ** ** ** ** ** ** ** ** ** ** **
-*/
 
 int	get_terminal_capabilities(t_select *data)
 {

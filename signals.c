@@ -6,7 +6,7 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 15:45:12 by ehelmine          #+#    #+#             */
-/*   Updated: 2022/02/10 13:17:59 by ehelmine         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:52:21 by ehelmine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	handle_winch(int signal_num)
 {
 	if (signal_num)
 	{
-		get_window_size(g_plus, 1);
+		get_window_size(g_plus);
 		fill_output(g_plus);
 	}
 }
@@ -68,7 +68,7 @@ static void	handle_cont(int signal_num)
 		}
 		signal(SIGTSTP, handle_tstp);
 		tputs(g_plus->term_ti_start, 1, f_putc);
-		get_window_size(g_plus, 1);
+		get_window_size(g_plus);
 		fill_output(g_plus);
 		if (g_plus->output)
 			write(g_plus->fd_out, g_plus->output, g_plus->output_len);

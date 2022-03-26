@@ -6,7 +6,11 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 11:39:27 by ehelmine          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/03/26 13:09:13 by ehelmine         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/10 14:54:58 by ehelmine         ###   ########.fr       */
+>>>>>>> 398ec6d825907fda58380f32fdb29620bcdeedae
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +126,7 @@ int	read_loop(struct termios orig_t, t_select *data)
 	int		check;
 
 	set_start_values(data);
-	get_window_size(data, 0);
+	get_window_size(data);
 	fill_output(data);
 	while (1)
 	{

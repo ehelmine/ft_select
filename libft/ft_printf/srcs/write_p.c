@@ -6,7 +6,11 @@
 /*   By: ehelmine <ehelmine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 17:58:06 by ehelmine          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/03/24 11:21:24 by ehelmine         ###   ########.fr       */
+=======
+/*   Updated: 2022/02/10 15:06:51 by ehelmine         ###   ########.fr       */
+>>>>>>> 398ec6d825907fda58380f32fdb29620bcdeedae
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +41,7 @@ static int	write_p_3(t_val *all, char *output, char *number, int i)
 	return (1);
 }
 
-static int	write_p_2(t_val *all, char *number, char *abc)
+static void	write_p_2(t_val *all, char *number, char *abc)
 {
 	int	a;
 	int	x;
@@ -58,7 +62,7 @@ static int	write_p_2(t_val *all, char *number, char *abc)
 	all->real_len = all->len;
 	if (all->width > all->len)
 		all->real_len = all->width;
-	return (a);
+	return ;
 }
 
 int	write_p(t_val *all)
